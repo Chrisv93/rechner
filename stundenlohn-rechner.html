@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<title>Stundenlohn Rechner</title>
+</head>
+<body>
+
+<h1>Stundenlohn Rechner</h1>
+
+<input type="number" id="gehalt" placeholder="Monatsgehalt (€)">
+<button onclick="calc()">Berechnen</button>
+
+<h2 id="result"></h2>
+
+<script>
+function calc() {
+    let gehalt = document.getElementById("gehalt").value;
+
+    if(gehalt <= 0) {
+        document.getElementById("result").innerText = "Bitte Wert eingeben";
+        return;
+    }
+
+    let stundenlohn = gehalt / 160;
+
+    document.getElementById("result").innerText =
+        "Stundenlohn: " + stundenlohn.toFixed(2) + " €";
+}
+</script>
+
+</body>
+</html>
