@@ -1,28 +1,30 @@
-<!DOCTYPE html>
-<html>
-<body>
-
-<h1>Seiten Generator</h1>
-
-<textarea id="output" rows="20" cols="80"></textarea><br>
-<button onclick="generate()">Generate</button>
-
 <script>
 function generate() {
-    let text = "";
-
     for(let i = 1000; i <= 6000; i += 100) {
-        let netto = i * 0.7;
+        let netto = (i * 0.7).toFixed(0);
 
-        text += "Filename: netto-" + i + "-brutto.html\n";
-        text += "<h1>Netto bei " + i + "€ Brutto</h1>\n";
-        text += "<h2>" + netto.toFixed(0) + "€ netto</h2>\n";
-        text += "<a href='index.html'>Zum Rechner</a>\n\n";
-    }
+        let content = `
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<title>Netto bei ${i} Brutto</title>
+</head>
+<body>
 
-    document.getElementById("output").value = text;
-}
-</script>
+<h1>Netto bei ${i}€ Brutto</h1>
+<h2>${netto}€ netto</h2>
+<a href="index.html">Zum Rechner</a>
 
 </body>
 </html>
+`;
+
+        let blob = new Blob([content], {type: "text/html"});
+        let a = document.createElement("a");
+        a.href = URL.createObjectURL(blob);
+        a.download = `netto-${i}-brutto.html`;
+        a.click();
+    }
+}
+</script>
