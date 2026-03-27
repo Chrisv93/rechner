@@ -1,13 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
-<url><loc>https://chrisv93.github.io/rechner/</loc></url>
+<url>
+<loc>https://chrisv93.github.io/rechner/</loc>
+</url>
 
-<url><loc>https://chrisv93.github.io/rechner/netto-2500-brutto.html</loc></url>
-<url><loc>https://chrisv93.github.io/rechner/netto-3000-brutto.html</loc></url>
-<url><loc>https://chrisv93.github.io/rechner/netto-3500-brutto.html</loc></url>
-<url><loc>https://chrisv93.github.io/rechner/netto-4000-brutto.html</loc></url>
-<url><loc>https://chrisv93.github.io/rechner/netto-4500-brutto.html</loc></url>
-<url><loc>https://chrisv93.github.io/rechner/netto-5000-brutto.html</loc></url>
+<url>
+<loc>https://chrisv93.github.io/rechner/netto-2500-brutto.html</loc>
+</url>
+
+<url>
+<loc>https://chrisv93.github.io/rechner/netto-3000-brutto.html</loc>
+</url>
+
+<url>
+<loc>https://chrisv93.github.io/rechner/netto-3500-brutto.html</loc>
+</url>
+
+<url>
+<loc>https://chrisv93.github.io/rechner/netto-4000-brutto.html</loc>
+</url>
+
+<url>
+<loc>https://chrisv93.github.io/rechner/netto-4500-brutto.html</loc>
+</url>
+
+<url>
+<loc>https://chrisv93.github.io/rechner/netto-5000-brutto.html</loc>
+</url>
 
 </urlset>
