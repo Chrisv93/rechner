@@ -1,0 +1,37 @@
+index.html
+
+
+
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<title>Brutto Netto Rechner</title>
+</head>
+<body>
+
+<h1>Brutto Netto Rechner</h1>
+
+<input type="number" id="brutto" placeholder="Brutto (€)">
+<button onclick="calc()">Berechnen</button>
+
+<h2 id="result"></h2>
+
+<script>
+function calc() {
+    let brutto = document.getElementById("brutto").value;
+    
+    if(brutto <= 0) {
+        document.getElementById("result").innerText = "Bitte Wert eingeben";
+        return;
+    }
+
+    let netto = brutto * 0.7;
+
+    document.getElementById("result").innerText = 
+        "Netto ca.: " + netto.toFixed(2) + " €";
+}
+</script>
+
+</body>
+</html>
