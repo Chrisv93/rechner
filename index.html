@@ -16,30 +16,18 @@
 
 <h2>Beliebte Berechnungen</h2>
 
+<h2>Alle Berechnungen</h2>
+
 <ul>
+<li><a href="netto-1000-brutto.html">Netto bei 1000€ brutto</a></li>
+<li><a href="netto-1500-brutto.html">Netto bei 1500€ brutto</a></li>
+<li><a href="netto-2000-brutto.html">Netto bei 2000€ brutto</a></li>
 <li><a href="netto-2500-brutto.html">Netto bei 2500€ brutto</a></li>
 <li><a href="netto-3000-brutto.html">Netto bei 3000€ brutto</a></li>
 <li><a href="netto-3500-brutto.html">Netto bei 3500€ brutto</a></li>
 <li><a href="netto-4000-brutto.html">Netto bei 4000€ brutto</a></li>
 <li><a href="netto-4500-brutto.html">Netto bei 4500€ brutto</a></li>
 <li><a href="netto-5000-brutto.html">Netto bei 5000€ brutto</a></li>
+<li><a href="netto-5500-brutto.html">Netto bei 5500€ brutto</a></li>
+<li><a href="netto-6000-brutto.html">Netto bei 6000€ brutto</a></li>
 </ul>
-
-<script>
-function calc() {
-    let brutto = document.getElementById("brutto").value;
-    
-    if(brutto <= 0) {
-        document.getElementById("result").innerText = "Bitte Wert eingeben";
-        return;
-    }
-
-    let netto = brutto * 0.7;
-
-    document.getElementById("result").innerText = 
-        "Netto ca.: " + netto.toFixed(2) + " €";
-}
-</script>
-
-</body>
-</html>
