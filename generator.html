@@ -3,54 +3,72 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Netto Seiten Generator</title>
+<title>Netto Seiten Generator AUTO SEO</title>
 </head>
 
 <body>
 
-<h1>Netto Seiten Generator</h1>
+<h1>Netto Seiten Generator (AUTO SEO)</h1>
 
 <button onclick="generate()">Seiten generieren (ZIP)</button>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 
 <script>
-function calcNetto(b){
-  if(b<=2000)return Math.round(b*0.74/50)*50;
-  if(b<=3000)return Math.round(b*0.72/50)*50;
-  if(b<=4000)return Math.round(b*0.70/50)*50;
-  if(b<=5000)return Math.round(b*0.68/50)*50;
-  if(b<=7000)return Math.round(b*0.66/50)*50;
-  return Math.round(b*0.64/50)*50;
+function netto(b){
+ if(b<=2000)return Math.round(b*0.74/50)*50;
+ if(b<=3000)return Math.round(b*0.72/50)*50;
+ if(b<=4000)return Math.round(b*0.70/50)*50;
+ if(b<=5000)return Math.round(b*0.68/50)*50;
+ if(b<=7000)return Math.round(b*0.66/50)*50;
+ return Math.round(b*0.64/50)*50;
 }
 
 function links(v){
-  let out="";
-  for(let i=v-300;i<=v+300;i+=100){
-    if(i>=1000 && i<=10000 && i!==v){
-      out+=`<li><a href="netto-${i}-brutto.html">${i}€ brutto</a></li>`;
-    }
+ let l="";
+ for(let i=v-300;i<=v+300;i+=100){
+  if(i>=1000 && i<=10000 && i!==v){
+   l+=`<li><a href="netto-${i}-brutto.html">${i}€ brutto → netto</a></li>`;
   }
-  return out;
+ }
+ return l;
+}
+
+function text(v,n){
+ return `
+<p>
+Bei einem Bruttogehalt von ${v}€ bleiben dir ungefähr ${n}€ netto übrig. 
+Der genaue Betrag hängt von Steuerklasse, Krankenversicherung und Bundesland ab.
+</p>
+
+<p>
+Viele Arbeitnehmer unterschätzen, wie stark Steuern und Abgaben das Netto beeinflussen. 
+Ein Vergleich lohnt sich, um mehr Geld zu behalten.
+</p>
+`;
 }
 
 function page(v){
-  let n=calcNetto(v);
+ let n=netto(v);
 
 return `<!DOCTYPE html>
 <html lang="de">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Netto bei ${v}€ brutto</title>
-<meta name="description" content="Netto bei ${v}€ brutto berechnen und vergleichen.">
+
+<title>${v}€ brutto → netto 2026 – Rechner & Vergleich</title>
+
+<meta name="description" content="Wie viel Netto bleibt bei ${v}€ brutto? Jetzt berechnen und dein Gehalt vergleichen.">
+
 <style>
-body{font-family:Arial;max-width:800px;margin:0 auto;padding:20px;}
+body{font-family:Arial;max-width:800px;margin:0 auto;padding:20px;line-height:1.6;}
 .cta{background:#eef6ff;padding:20px;border-radius:10px;margin:20px 0;}
 .button{display:inline-block;padding:12px 18px;background:#0a58ca;color:#fff;text-decoration:none;border-radius:6px;}
+a{color:#0a58ca;text-decoration:none;}
 </style>
-</head>
 
+</head>
 <body>
 
 <h1>Netto bei ${v}€ brutto</h1>
@@ -64,9 +82,9 @@ Jetzt vergleichen
 </a>
 </div>
 
-<p><strong>${n}€ netto</strong></p>
+<p><strong>≈ ${n}€ netto</strong></p>
 
-<p>Bei ${v}€ brutto bleiben ca. ${n}€ netto übrig.</p>
+${text(v,n)}
 
 <h2>Ähnliche Gehälter</h2>
 <ul>
@@ -87,18 +105,18 @@ Jetzt vergleichen
 }
 
 function generate(){
-  let zip=new JSZip();
+ let zip=new JSZip();
 
-  for(let v=1000;v<=10000;v+=100){
-    zip.file("netto-"+v+"-brutto.html",page(v));
-  }
+ for(let v=1000;v<=10000;v+=100){
+  zip.file(`netto-${v}-brutto.html`,page(v));
+ }
 
-  zip.generateAsync({type:"blob"}).then(function(content){
-    let a=document.createElement("a");
-    a.href=URL.createObjectURL(content);
-    a.download="netto-seiten.zip";
-    a.click();
-  });
+ zip.generateAsync({type:"blob"}).then(function(content){
+  let a=document.createElement("a");
+  a.href=URL.createObjectURL(content);
+  a.download="netto-seiten-seo.zip";
+  a.click();
+ });
 }
 </script>
 
