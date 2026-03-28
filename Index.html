@@ -4,7 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Brutto Netto Rechner Deutschland</title>
-<meta name="description" content="Brutto Netto Rechner Deutschland + Gehaltsvergleich.">
+<meta name="description" content="Brutto Netto Rechner Deutschland: Netto aus Brutto berechnen und Gehalt vergleichen.">
+
 <style>
 body {
   font-family: Arial, sans-serif;
@@ -13,6 +14,11 @@ body {
   padding: 20px;
   line-height: 1.6;
 }
+
+h1, h2 {
+  margin-top: 0;
+}
+
 .box {
   background: #f5f7fa;
   border: 1px solid #ddd;
@@ -20,6 +26,7 @@ body {
   border-radius: 10px;
   margin: 20px 0;
 }
+
 .cta {
   background: #eef6ff;
   border: 1px solid #bfd7ff;
@@ -27,6 +34,7 @@ body {
   border-radius: 10px;
   margin: 20px 0;
 }
+
 .button {
   display: inline-block;
   padding: 12px 18px;
@@ -35,26 +43,47 @@ body {
   text-decoration: none;
   border-radius: 6px;
 }
+
+input, button {
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+  font-size: 16px;
+}
+
+button {
+  background: #0a58ca;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+ul {
+  padding-left: 20px;
+}
 </style>
 </head>
+
 <body>
 
 <h1>Brutto Netto Rechner Deutschland</h1>
 
-<p>Berechne dein Netto Gehalt und finde Sparpotenziale.</p>
+<p>
+Berechne schnell dein Netto Gehalt aus deinem Brutto und vergleiche verschiedene Gehaltsstufen.
+</p>
 
 <div class="cta">
 <h2>Mehr Netto behalten</h2>
-<p>Vergleiche jetzt deine Fixkosten und optimiere dein Einkommen.</p>
+<p>Vergleiche jetzt Versicherungen, Kredite und Verträge und spare monatlich Geld.</p>
 <a href="https://www.check24.de/" target="_blank" rel="nofollow sponsored" class="button">
 Jetzt vergleichen
 </a>
 </div>
 
 <div class="box">
-<h2>Rechner</h2>
+<h2>Brutto → Netto Rechner</h2>
 
-<input type="number" id="brutto" placeholder="Brutto z.B. 3000" style="padding:10px;width:100%;margin-bottom:10px">
+<input type="number" id="brutto" placeholder="z.B. 3000">
 
 <button onclick="calc()">Netto berechnen</button>
 
@@ -62,11 +91,12 @@ Jetzt vergleichen
 </div>
 
 <div class="box">
-<h2>Beliebte Seiten</h2>
+<h2>Beliebte Netto Seiten</h2>
 <ul>
-<li><a href="netto-2000-brutto.html">Netto bei 2000€</a></li>
-<li><a href="netto-3000-brutto.html">Netto bei 3000€</a></li>
-<li><a href="netto-4000-brutto.html">Netto bei 4000€</a></li>
+<li><a href="netto-2000-brutto.html">Netto bei 2000€ brutto</a></li>
+<li><a href="netto-3000-brutto.html">Netto bei 3000€ brutto</a></li>
+<li><a href="netto-4000-brutto.html">Netto bei 4000€ brutto</a></li>
+<li><a href="netto-5000-brutto.html">Netto bei 5000€ brutto</a></li>
 </ul>
 </div>
 
@@ -79,17 +109,26 @@ Jetzt vergleichen
 
 <script>
 function calc(){
-  let b = document.getElementById("brutto").value;
-  if(!b){return;}
+  let b = parseFloat(document.getElementById("brutto").value);
+
+  if(!b || b < 1000){
+    document.getElementById("result").innerText = "Bitte gültigen Wert eingeben.";
+    return;
+  }
+
   let n;
-  if(b <= 2000) n = b*0.74;
-  else if(b <= 3000) n = b*0.72;
-  else if(b <= 4000) n = b*0.70;
-  else if(b <= 5000) n = b*0.68;
-  else if(b <= 7000) n = b*0.66;
-  else n = b*0.64;
+
+  if(b<=2000) n=b*0.74;
+  else if(b<=3000) n=b*0.72;
+  else if(b<=4000) n=b*0.70;
+  else if(b<=5000) n=b*0.68;
+  else if(b<=7000) n=b*0.66;
+  else n=b*0.64;
+
   n = Math.round(n/50)*50;
-  document.getElementById("result").innerText = b + "€ brutto ≈ " + n + "€ netto";
+
+  document.getElementById("result").innerText =
+    b + "€ brutto ≈ " + n + "€ netto";
 }
 </script>
 
