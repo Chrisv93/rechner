@@ -3,14 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Netto Seiten Generator AUTO SEO</title>
+<title>Mass SEO Generator</title>
 </head>
 
 <body>
 
-<h1>Netto Seiten Generator (AUTO SEO)</h1>
+<h1>Mass SEO Generator (1000+ Seiten)</h1>
 
-<button onclick="generate()">Seiten generieren (ZIP)</button>
+<button onclick="generate()">Alle Seiten generieren</button>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 
@@ -24,31 +24,17 @@ function netto(b){
  return Math.round(b*0.64/50)*50;
 }
 
-function links(v){
+function links(v,type){
  let l="";
- for(let i=v-300;i<=v+300;i+=100){
+ for(let i=v-500;i<=v+500;i+=100){
   if(i>=1000 && i<=10000 && i!==v){
-   l+=`<li><a href="netto-${i}-brutto.html">${i}€ brutto → netto</a></li>`;
+   l+=`<li><a href="${type}-${i}.html">${i}€ ${type}</a></li>`;
   }
  }
  return l;
 }
 
-function text(v,n){
- return `
-<p>
-Bei einem Bruttogehalt von ${v}€ bleiben dir ungefähr ${n}€ netto übrig. 
-Der genaue Betrag hängt von Steuerklasse, Krankenversicherung und Bundesland ab.
-</p>
-
-<p>
-Viele Arbeitnehmer unterschätzen, wie stark Steuern und Abgaben das Netto beeinflussen. 
-Ein Vergleich lohnt sich, um mehr Geld zu behalten.
-</p>
-`;
-}
-
-function page(v){
+function pageNetto(v){
  let n=netto(v);
 
 return `<!DOCTYPE html>
@@ -58,47 +44,64 @@ return `<!DOCTYPE html>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>${v}€ brutto → netto 2026 – Rechner & Vergleich</title>
-
-<meta name="description" content="Wie viel Netto bleibt bei ${v}€ brutto? Jetzt berechnen und dein Gehalt vergleichen.">
+<meta name="description" content="Wie viel Netto bleibt bei ${v}€ brutto? Jetzt berechnen.">
 
 <style>
-body{font-family:Arial;max-width:800px;margin:0 auto;padding:20px;line-height:1.6;}
+body{font-family:Arial;max-width:800px;margin:0 auto;padding:20px;}
 .cta{background:#eef6ff;padding:20px;border-radius:10px;margin:20px 0;}
-.button{display:inline-block;padding:12px 18px;background:#0a58ca;color:#fff;text-decoration:none;border-radius:6px;}
-a{color:#0a58ca;text-decoration:none;}
+.button{display:inline-block;padding:12px;background:#0a58ca;color:#fff;text-decoration:none;border-radius:6px;}
 </style>
 
 </head>
 <body>
 
-<h1>Netto bei ${v}€ brutto</h1>
+<h1>${v}€ brutto → netto</h1>
 
 <div class="cta">
-<strong>Mehr Netto behalten?</strong><br>
-Vergleiche jetzt deine Fixkosten und spare Geld.
-<br><br>
-<a class="button" href="https://www.check24.de/" target="_blank">
-Jetzt vergleichen
-</a>
+<strong>Mehr Netto behalten</strong><br>
+<a class="button" href="https://www.check24.de/" target="_blank">Jetzt vergleichen</a>
 </div>
 
 <p><strong>≈ ${n}€ netto</strong></p>
 
-${text(v,n)}
+<p>Bei ${v}€ brutto bleiben ca. ${n}€ netto.</p>
 
 <h2>Ähnliche Gehälter</h2>
-<ul>
-${links(v)}
-</ul>
+<ul>${links(v,"netto")}</ul>
+
+<p><a href="index.html">Zurück</a></p>
+
+</body>
+</html>`;
+}
+
+function pageStunden(v){
+ let nettoVal=netto(v);
+ let stunden=Math.round(nettoVal/160);
+
+return `<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>${v}€ Gehalt → Stundenlohn ${stunden}€</title>
+<meta name="description" content="Stundenlohn bei ${v}€ Gehalt berechnen.">
+
+</head>
+<body>
+
+<h1>${v}€ Gehalt → ${stunden}€ Stundenlohn</h1>
 
 <div class="cta">
-<strong>Jetzt Geld sparen</strong><br>
-<a class="button" href="https://www.check24.de/" target="_blank">
-Jetzt vergleichen
-</a>
+<a class="button" href="https://www.check24.de/" target="_blank">Jetzt vergleichen</a>
 </div>
 
-<p><a href="index.html">Zurück zum Rechner</a></p>
+<p>Bei ${v}€ Gehalt entspricht das ca. ${stunden}€ pro Stunde.</p>
+
+<ul>${links(v,"stundenlohn")}</ul>
+
+<p><a href="index.html">Zurück</a></p>
 
 </body>
 </html>`;
@@ -107,14 +110,15 @@ Jetzt vergleichen
 function generate(){
  let zip=new JSZip();
 
- for(let v=1000;v<=10000;v+=100){
-  zip.file(`netto-${v}-brutto.html`,page(v));
+ for(let v=1000;v<=10000;v+=50){
+  zip.file(`netto-${v}-brutto.html`,pageNetto(v));
+  zip.file(`stundenlohn-${v}.html`,pageStunden(v));
  }
 
  zip.generateAsync({type:"blob"}).then(function(content){
   let a=document.createElement("a");
   a.href=URL.createObjectURL(content);
-  a.download="netto-seiten-seo.zip";
+  a.download="mass-seiten.zip";
   a.click();
  });
 }
