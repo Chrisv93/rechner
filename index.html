@@ -1,165 +1,103 @@
-PROJEKT STATUS – 28.03.2026
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Netto Seiten Generator</title>
+</head>
+<body>
 
-WEBSITE:
-https://chrisv93.github.io/rechner/
+<h1>Netto Seiten Generator</h1>
+<button onclick="generate()">Seiten generieren (ZIP)</button>
 
-PLATTFORM:
-GitHub Pages (100% kostenlos)
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.7.1/jszip.min.js"></script>
 
----
+<script>
+function calcNetto(brutto){
+  if(brutto <= 2000) return Math.round(brutto*0.74/50)*50;
+  if(brutto <= 3000) return Math.round(brutto*0.72/50)*50;
+  if(brutto <= 4000) return Math.round(brutto*0.70/50)*50;
+  if(brutto <= 5000) return Math.round(brutto*0.68/50)*50;
+  if(brutto <= 7000) return Math.round(brutto*0.66/50)*50;
+  return Math.round(brutto*0.64/50)*50;
+}
 
-BESTEHENDE STRUKTUR
+function generate(){
 
-HAUPTDATEI:
-- index.html (Rechner + interne Links + Affiliate Platzhalter)
+  let zip = new JSZip();
 
-TOOLS:
-- generator.html (erstellt SEO Seiten als ZIP)
-- bulk.html (alte Version)
+  for(let brutto=1000; brutto<=10000; brutto+=100){
 
----
+    let netto = calcNetto(brutto);
 
-SEO SEITEN:
+    let prev = Math.max(1000, brutto-100);
+    let next = Math.min(10000, brutto+100);
+    let next500 = Math.min(10000, brutto+500);
 
-NETTO:
-- ca. 181 Seiten
-- Format: netto-XXXX-brutto.html
-- Bereich: 1000€ – 10000€
+    let html = `<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<title>Netto bei ${brutto}€ brutto</title>
+<meta name="description" content="Netto bei ${brutto}€ brutto berechnen">
+</head>
+<body>
 
-STUNDENLOHN:
-- ca. 90 Seiten
-- Format: stundenlohn-XXXX.html
+<!-- TOP AFFILIATE -->
+<div style="background:#eef6ff;padding:15px;border:1px solid #ccc;margin-bottom:20px;border-radius:8px">
+<strong>Jetzt Fixkosten senken & mehr Netto behalten</strong><br>
+<a href="AWIN_LINK_HIER" target="_blank" rel="nofollow sponsored">
+Jetzt kostenlos vergleichen
+</a>
+</div>
 
----
+<h1>Netto bei ${brutto}€ brutto</h1>
 
-FEATURES:
+<p><strong>${netto}€ netto</strong></p>
 
-- Brutto → Netto Rechner
-- Stundenlohn Rechner
-- interne Verlinkung vorhanden
-- SEO Texte auf Seiten (Upgrade läuft / teilweise fertig)
-- Google Search Console verbunden
-- erste Seiten indexiert
+<p>Bei ${brutto}€ brutto bleiben ca. ${netto}€ netto übrig.</p>
 
----
+<!-- MID AFFILIATE -->
+<div style="background:#f5f7fa;padding:15px;border:1px solid #ddd;margin:20px 0;border-radius:8px">
+<a href="AWIN_LINK_HIER" target="_blank" rel="nofollow sponsored">
+Spare jetzt monatlich Geld mit einem kostenlosen Vergleich
+</a>
+</div>
 
-ZIEL:
+<h2>Ähnliche Werte</h2>
+<ul>
+<li><a href="netto-${prev}-brutto.html">${prev}€ brutto</a></li>
+<li><a href="netto-${next}-brutto.html">${next}€ brutto</a></li>
+<li><a href="netto-${next500}-brutto.html">${next500}€ brutto</a></li>
+</ul>
 
-- organischer Traffic über Google
-- Monetarisierung 100% kostenlos
-- skalierbares System
-- passives Einkommen
+<!-- LEAD BLOCK -->
+<div style="background:#f5f7fa;padding:20px;border:1px solid #ddd;margin-top:30px;border-radius:8px">
+<h2>Mehr Netto behalten (kostenlos)</h2>
+<p><strong>10 Wege, wie du monatlich mehr Netto behältst</strong></p>
+<form action="https://formspree.io/f/YOUR_ID" method="POST">
+<input type="email" name="email" placeholder="Deine E-Mail" required style="padding:10px;width:100%;margin-bottom:10px">
+<button type="submit" style="padding:10px;width:100%">Jetzt kostenlos erhalten</button>
+</form>
+</div>
 
----
+<p><a href="index.html">Zurück zur Startseite</a></p>
 
-AKTUELLER STAND:
+</body>
+</html>`;
 
-- Seiten online ✅
-- Indexierung gestartet ✅
-- SEO Struktur vorhanden ✅
-- Monetarisierung noch nicht aktiv ❌
+    zip.file(`netto-${brutto}-brutto.html`, html);
+  }
 
----
+  zip.generateAsync({type:"blob"}).then(function(content){
+    let a = document.createElement("a");
+    a.href = URL.createObjectURL(content);
+    a.download = "netto-seiten.zip";
+    a.click();
+  });
 
-WICHTIG:
+}
+</script>
 
-- KEINE neuen Netto Seiten erstellen (bereits vorhanden)
-- Fokus jetzt auf Optimierung + Geld
-
----
-
-DEINE AUFGABE:
-
-Führe mich Schritt für Schritt weiter
-
----
-
-NÄCHSTE 10 SCHRITTE (STRICT ROADMAP)
-
-1.
-Bestehende Netto Seiten prüfen:
-→ haben sie genug Text + interne Links?
-→ wenn nein: Generator Upgrade anwenden
-
----
-
-2.
-Index.html optimieren:
-→ klare Struktur
-→ bessere Texte
-→ bessere Klickführung
-
----
-
-3.
-Affiliate System aktivieren:
-→ AWIN Account nutzen
-→ echten Affiliate Link einbauen
-
----
-
-4.
-Affiliate Link strategisch platzieren:
-→ oben sichtbar
-→ nach Rechner Ergebnis
-→ in Content integriert
-
----
-
-5.
-CTR erhöhen:
-→ bessere Überschriften
-→ klare Call-to-Action
-→ Nutzer zum Klicken bringen
-
----
-
-6.
-Interne Verlinkung ausbauen:
-→ jede Seite verlinkt ähnliche Seiten
-→ erhöht SEO massiv
-
----
-
-7.
-Google Indexierung pushen:
-→ täglich 5–10 Seiten einreichen
-→ Rest automatisch
-
----
-
-8.
-Neue Content-Blöcke hinzufügen:
-→ FAQs
-→ kurze Erklärungen
-→ mehr Relevanz
-
----
-
-9.
-Zweite Nische vorbereiten:
-→ z. B. Steuer / Kredit / Gehalt optimieren
-→ gleiche Strategie skalieren
-
----
-
-10.
-Performance beobachten:
-→ Search Console checken
-→ welche Seiten bekommen Impressionen?
-→ darauf weiter optimieren
-
----
-
-REGEL:
-
-- immer komplette Codes liefern
-- keine halben Lösungen
-- klare Entscheidungen
-- Fokus: Traffic → Ranking → Geld
-
----
-
-START:
-
-Gib mir den nächsten Schritt basierend auf diesem System
+</body>
+</html>
