@@ -1,103 +1,73 @@
-# generate_netto_pages.py
-
-from pathlib import Path
-
-OUTPUT_DIR = Path(".")
-
-NETTO_VALUES = list(range(1000, 10001, 100))
-
-AFFILIATE_URL = "https://www.check24.net/"
-BASE_URL = "https://chrisv93.github.io/rechner/"
-
-def calc_netto(brutto):
-    if brutto <= 2000: f=0.74
-    elif brutto <= 3000: f=0.72
-    elif brutto <= 4000: f=0.70
-    elif brutto <= 5000: f=0.68
-    elif brutto <= 7000: f=0.66
-    else: f=0.64
-    return int(brutto*f/50)*50
-
-def euro(x):
-    return f"{x}€"
-
-def netto_file(x):
-    return f"netto-{x}-brutto.html"
-
-def footer_links():
-    links = []
-    for v in [1000,1500,2000,2500,3000,3500,4000,4500,5000,6000,7000,8000]:
-        links.append(f'<a href="{netto_file(v)}">{v}€ brutto</a>')
-    return " | ".join(links)
-
-def page(brutto):
-    netto = calc_netto(brutto)
-    return f"""<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="de">
 <head>
 <meta charset="UTF-8">
-<title>Netto bei {euro(brutto)} brutto</title>
-<meta name="description" content="Netto bei {euro(brutto)} brutto berechnen">
-<link rel="canonical" href="{BASE_URL}{netto_file(brutto)}">
+<title>Netto Seiten Generator</title>
 </head>
 <body>
 
-<h1>Netto bei {euro(brutto)} brutto</h1>
+<h1>Netto Seiten Generator</h1>
+<button onclick="generate()">Generate ZIP</button>
 
-<p><strong>{euro(netto)} netto</strong></p>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.7.1/jszip.min.js"></script>
 
-<p>Bei {euro(brutto)} brutto bleiben ca. {euro(netto)} netto übrig.</p>
+<script>
+function generate() {
+    let zip = new JSZip();
 
-<h2>Ähnliche Werte</h2>
-<ul>
-<li><a href="{netto_file(max(1000, brutto-100))}">{euro(max(1000, brutto-100))}</a></li>
-<li><a href="{netto_file(min(10000, brutto+100))}">{euro(min(10000, brutto+100))}</a></li>
-<li><a href="{netto_file(min(10000, brutto+500))}">{euro(min(10000, brutto+500))}</a></li>
-</ul>
+    for (let i = 1000; i <= 10000; i += 50) {
+        let netto = Math.round(i * 0.7);
 
-<p>
-<a href="{AFFILIATE_URL}" target="_blank" rel="nofollow sponsored">
-Jetzt sparen & vergleichen
-</a>
-</p>
-
-<div>
-{footer_links()}
-</div>
-
-</body>
-</html>
-"""
-
-def index():
-    links = "\n".join([f'<li><a href="{netto_file(v)}">{v}€ brutto</a></li>' for v in NETTO_VALUES[:50]])
-    return f"""<!DOCTYPE html>
+        let content = `<!DOCTYPE html>
 <html lang="de">
 <head>
 <meta charset="UTF-8">
-<title>Brutto Netto Rechner</title>
-<link rel="canonical" href="{BASE_URL}">
+<title>Netto bei ${i} Euro Brutto in Deutschland</title>
+<meta name="description" content="Wie viel netto bleiben bei ${i} Euro brutto? Hier findest du eine einfache und schnelle Berechnung für Deutschland.">
 </head>
 <body>
 
-<h1>Brutto Netto Rechner</h1>
+<h1>Netto bei ${i}€ Brutto</h1>
 
+<p>Wenn du ${i} Euro brutto im Monat verdienst, bleiben dir in Deutschland geschätzt etwa ${netto} Euro netto. Die genaue Höhe hängt von Steuerklasse, Krankenversicherung, Bundesland und weiteren Abzügen ab.</p>
+
+<h2>${i}€ brutto in netto berechnen</h2>
+<p>Als grobe Orientierung kannst du bei diesem Beispiel mit rund ${netto} Euro netto rechnen. Für eine exakte Berechnung solltest du immer individuelle Faktoren wie Steuerklasse und Sozialabgaben beachten.</p>
+
+<h2>Welche Faktoren beeinflussen dein Netto?</h2>
 <ul>
-{links}
+<li>Steuerklasse</li>
+<li>Krankenversicherung</li>
+<li>Kinderfreibeträge</li>
+<li>Kirchensteuer</li>
+<li>Bundesland</li>
 </ul>
 
-<div>
-{footer_links()}
-</div>
+<h2>Ähnliche Berechnungen</h2>
+<ul>
+<li><a href="netto-${Math.max(1000, i-100)}-brutto.html">Netto bei ${Math.max(1000, i-100)}€ brutto</a></li>
+<li><a href="netto-${i}-brutto.html">Netto bei ${i}€ brutto</a></li>
+<li><a href="netto-${Math.min(10000, i+100)}-brutto.html">Netto bei ${Math.min(10000, i+100)}€ brutto</a></li>
+<li><a href="index.html">Zum Brutto Netto Rechner</a></li>
+</ul>
+
+<h2>Hinweis</h2>
+<p>Diese Seite bietet eine vereinfachte Orientierung für Deutschland und ersetzt keine individuelle Steuerberatung.</p>
+
+</body>
+</html>`;
+
+        zip.file(`netto-${i}-brutto.html`, content);
+    }
+
+    zip.generateAsync({type:"blob"}).then(function(content) {
+        let a = document.createElement("a");
+        a.href = URL.createObjectURL(content);
+        a.download = "netto-seiten-upgrade.zip";
+        a.click();
+    });
+}
+</script>
 
 </body>
 </html>
-"""
-
-def main():
-    for v in NETTO_VALUES:
-        (OUTPUT_DIR / netto_file(v)).write_text(page(v), encoding="utf-8")
-    (OUTPUT_DIR / "index.html").write_text(index(), encoding="utf-8")
-
-if __name__ == "__main__":
-    main()
