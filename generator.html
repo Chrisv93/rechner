@@ -4,21 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Netto Seiten Generator</title>
-
-<style>
-body {
-  font-family: Arial, sans-serif;
-  max-width: 900px;
-  margin: 0 auto;
-  padding: 20px;
-}
-button {
-  padding: 12px 18px;
-  font-size: 16px;
-  cursor: pointer;
-}
-</style>
-
 </head>
 <body>
 
@@ -49,21 +34,14 @@ function page(v){
 <html lang="de">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Netto bei ${v}€ brutto</title>
-<meta name="description" content="Netto bei ${v}€ brutto berechnen.">
 </head>
 <body>
 
 <h1>Netto bei ${v}€ brutto</h1>
+<p>${netto}€ netto</p>
 
-<p><strong>${netto}€ netto</strong></p>
-
-<p>Bei ${v}€ brutto bleiben ca. ${netto}€ netto übrig.</p>
-
-<p>
-<a href="index.html">Zurück zum Rechner</a>
-</p>
+<a href="index.html">Zurück</a>
 
 </body>
 </html>`;
