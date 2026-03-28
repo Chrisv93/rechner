@@ -2,70 +2,97 @@
 <html lang="de">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Netto Seiten Generator</title>
 </head>
 <body>
 
 <h1>Netto Seiten Generator</h1>
-<button onclick="generate()">Generate ZIP</button>
+<button onclick="generate()">Seiten generieren (ZIP)</button>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.7.1/jszip.min.js"></script>
 
 <script>
-function generate() {
-    let zip = new JSZip();
+function calcNetto(brutto){
+  if(brutto <= 2000) return Math.round(brutto*0.74/50)*50;
+  if(brutto <= 3000) return Math.round(brutto*0.72/50)*50;
+  if(brutto <= 4000) return Math.round(brutto*0.70/50)*50;
+  if(brutto <= 5000) return Math.round(brutto*0.68/50)*50;
+  if(brutto <= 7000) return Math.round(brutto*0.66/50)*50;
+  return Math.round(brutto*0.64/50)*50;
+}
 
-    for (let i = 1000; i <= 10000; i += 50) {
-        let netto = Math.round(i * 0.7);
+function generate(){
 
-        let content = `<!DOCTYPE html>
+  let zip = new JSZip();
+
+  for(let brutto=1000; brutto<=10000; brutto+=100){
+
+    let netto = calcNetto(brutto);
+
+    let prev = Math.max(1000, brutto-100);
+    let next = Math.min(10000, brutto+100);
+    let next500 = Math.min(10000, brutto+500);
+
+    let html = `<!DOCTYPE html>
 <html lang="de">
 <head>
 <meta charset="UTF-8">
-<title>Netto bei ${i} Euro Brutto in Deutschland</title>
-<meta name="description" content="Wie viel netto bleiben bei ${i} Euro brutto? Hier findest du eine einfache und schnelle Berechnung für Deutschland.">
+<title>Netto bei ${brutto}€ brutto</title>
+<meta name="description" content="Netto bei ${brutto}€ brutto berechnen">
 </head>
 <body>
 
-<h1>Netto bei ${i}€ Brutto</h1>
+<h1>Netto bei ${brutto}€ brutto</h1>
 
-<p>Wenn du ${i} Euro brutto im Monat verdienst, bleiben dir in Deutschland geschätzt etwa ${netto} Euro netto. Die genaue Höhe hängt von Steuerklasse, Krankenversicherung, Bundesland und weiteren Abzügen ab.</p>
+<p><strong>${netto}€ netto</strong></p>
 
-<h2>${i}€ brutto in netto berechnen</h2>
-<p>Als grobe Orientierung kannst du bei diesem Beispiel mit rund ${netto} Euro netto rechnen. Für eine exakte Berechnung solltest du immer individuelle Faktoren wie Steuerklasse und Sozialabgaben beachten.</p>
+<p>Bei ${brutto}€ brutto bleiben ca. ${netto}€ netto übrig.</p>
 
-<h2>Welche Faktoren beeinflussen dein Netto?</h2>
+<h2>Ähnliche Werte</h2>
 <ul>
-<li>Steuerklasse</li>
-<li>Krankenversicherung</li>
-<li>Kinderfreibeträge</li>
-<li>Kirchensteuer</li>
-<li>Bundesland</li>
+<li><a href="netto-${prev}-brutto.html">${prev}€ brutto</a></li>
+<li><a href="netto-${next}-brutto.html">${next}€ brutto</a></li>
+<li><a href="netto-${next500}-brutto.html">${next500}€ brutto</a></li>
 </ul>
 
-<h2>Ähnliche Berechnungen</h2>
-<ul>
-<li><a href="netto-${Math.max(1000, i-100)}-brutto.html">Netto bei ${Math.max(1000, i-100)}€ brutto</a></li>
-<li><a href="netto-${i}-brutto.html">Netto bei ${i}€ brutto</a></li>
-<li><a href="netto-${Math.min(10000, i+100)}-brutto.html">Netto bei ${Math.min(10000, i+100)}€ brutto</a></li>
-<li><a href="index.html">Zum Brutto Netto Rechner</a></li>
-</ul>
+<p>
+<a href="https://www.check24.net/" target="_blank" rel="nofollow sponsored">
+Jetzt sparen & vergleichen
+</a>
+</p>
 
-<h2>Hinweis</h2>
-<p>Diese Seite bietet eine vereinfachte Orientierung für Deutschland und ersetzt keine individuelle Steuerberatung.</p>
+<!-- LEAD BLOCK -->
+<div style="background:#f5f7fa;padding:20px;border:1px solid #ddd;margin-top:30px;border-radius:8px">
+
+<h2>Mehr Netto behalten (kostenlos)</h2>
+
+<p><strong>10 Wege, wie du monatlich mehr Netto behältst</strong></p>
+
+<form action="https://formspree.io/f/YOUR_ID" method="POST">
+<input type="email" name="email" placeholder="Deine E-Mail" required style="padding:10px;width:100%;margin-bottom:10px">
+<button type="submit" style="padding:10px;width:100%">Jetzt kostenlos erhalten</button>
+</form>
+
+<p style="font-size:12px">Kein Spam. Jederzeit abmeldbar.</p>
+
+</div>
+
+<p><a href="index.html">Zurück zur Startseite</a></p>
 
 </body>
 </html>`;
 
-        zip.file(`netto-${i}-brutto.html`, content);
-    }
+    zip.file(`netto-${brutto}-brutto.html`, html);
+  }
 
-    zip.generateAsync({type:"blob"}).then(function(content) {
-        let a = document.createElement("a");
-        a.href = URL.createObjectURL(content);
-        a.download = "netto-seiten-upgrade.zip";
-        a.click();
-    });
+  zip.generateAsync({type:"blob"}).then(function(content){
+    let a = document.createElement("a");
+    a.href = URL.createObjectURL(content);
+    a.download = "netto-seiten.zip";
+    a.click();
+  });
+
 }
 </script>
 
