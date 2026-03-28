@@ -3,48 +3,30 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Brutto Netto Rechner Deutschland</title>
-<meta name="description" content="Brutto Netto Rechner Deutschland.">
-
-<style>
-body {
-  font-family: Arial, sans-serif;
-  max-width: 900px;
-  margin: 0 auto;
-  padding: 20px;
-}
-button, input {
-  width: 100%;
-  padding: 10px;
-  margin-top: 10px;
-}
-</style>
-
+<title>Brutto Netto Rechner</title>
 </head>
 <body>
 
 <h1>Brutto Netto Rechner</h1>
 
-<input type="number" id="b" placeholder="z.B. 3000">
-<button onclick="calc()">Berechnen</button>
+<input id="b" type="number" placeholder="3000">
+<button onclick="c()">Berechnen</button>
 
 <p id="r"></p>
 
-<p><a href="generator.html">Generator öffnen</a></p>
-
 <script>
-function calc(){
-  let b = parseFloat(document.getElementById("b").value);
-  if(!b){return;}
-  let n;
-  if(b<=2000) n=b*0.74;
-  else if(b<=3000) n=b*0.72;
-  else if(b<=4000) n=b*0.70;
-  else if(b<=5000) n=b*0.68;
-  else if(b<=7000) n=b*0.66;
-  else n=b*0.64;
-  n = Math.round(n/50)*50;
-  document.getElementById("r").innerText = b + "€ brutto ≈ " + n + "€ netto";
+function c(){
+ let b=document.getElementById("b").value;
+ if(!b)return;
+ let n;
+ if(b<=2000)n=b*0.74;
+ else if(b<=3000)n=b*0.72;
+ else if(b<=4000)n=b*0.70;
+ else if(b<=5000)n=b*0.68;
+ else if(b<=7000)n=b*0.66;
+ else n=b*0.64;
+ n=Math.round(n/50)*50;
+ document.getElementById("r").innerText=b+"€ ≈ "+n+"€ netto";
 }
 </script>
 
