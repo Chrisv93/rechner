@@ -1,24 +1,12 @@
 # generate_netto_pages.py
 
-import os
 from pathlib import Path
 
 OUTPUT_DIR = Path(".")
 
 NETTO_VALUES = list(range(1000, 10001, 100))
-STUNDENLOHN_VALUES = list(range(1000, 8001, 1000))
-
 AFFILIATE_URL = "https://www.check24.net/"
 BASE_URL = "https://chrisv93.github.io/rechner/"
-
-CSS = """
-body{font-family:Arial,sans-serif;max-width:960px;margin:0 auto;padding:20px;line-height:1.6}
-a{color:#0a58ca;text-decoration:none}
-a:hover{text-decoration:underline}
-.box{background:#f5f7fa;border:1px solid #ddd;padding:15px;margin:20px 0;border-radius:8px}
-.footer-links{margin-top:40px;padding-top:20px;border-top:1px solid #ddd}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
-"""
 
 def calc_netto(brutto):
     if brutto <= 2000: f=0.74
@@ -35,9 +23,6 @@ def euro(x):
 def netto_file(x):
     return f"netto-{x}-brutto.html"
 
-def stunden_file(x):
-    return f"stundenlohn-{x}.html"
-
 def footer_links():
     links = []
     for v in [1000,1500,2000,2500,3000,3500,4000,4500,5000,6000,7000,8000]:
@@ -50,19 +35,15 @@ def page(brutto):
 <html lang="de">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Netto bei {euro(brutto)} brutto</title>
 <meta name="description" content="Netto bei {euro(brutto)} brutto berechnen">
 <link rel="canonical" href="{BASE_URL}{netto_file(brutto)}">
-<style>{CSS}</style>
 </head>
 <body>
 
 <h1>Netto bei {euro(brutto)} brutto</h1>
 
-<div class="box">
-<strong>{euro(netto)} netto</strong>
-</div>
+<p><strong>{euro(netto)} netto</strong></p>
 
 <p>Bei {euro(brutto)} brutto bleiben ca. {euro(netto)} netto übrig.</p>
 
@@ -73,19 +54,19 @@ def page(brutto):
 <li><a href="{netto_file(brutto+500)}">{euro(brutto+500)}</a></li>
 </ul>
 
-<div class="box">
+<p>
 <a href="{AFFILIATE_URL}" target="_blank" rel="nofollow sponsored">
 Jetzt sparen & vergleichen
 </a>
-</div>
+</p>
 
-<div class="footer-links">
-<strong>Beliebte Rechner:</strong><br>
+<div>
 {footer_links()}
 </div>
 
 </body>
-</html>"""
+</html>
+"""
 
 def index():
     links = "\n".join([f'<li><a href="{netto_file(v)}">{v}€ brutto</a></li>' for v in NETTO_VALUES[:50]])
@@ -93,10 +74,8 @@ def index():
 <html lang="de">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Brutto Netto Rechner</title>
 <link rel="canonical" href="{BASE_URL}">
-<style>{CSS}</style>
 </head>
 <body>
 
@@ -106,12 +85,13 @@ def index():
 {links}
 </ul>
 
-<div class="footer-links">
+<div>
 {footer_links()}
 </div>
 
 </body>
-</html>"""
+</html>
+"""
 
 def main():
     for v in NETTO_VALUES:
