@@ -1,40 +1,122 @@
-<script>
-function generate() {
-    for(let i = 1000; i <= 10000; i += 50) {
-        let netto = Math.round(i * 0.7);
+# generate_netto_pages.py
 
-        let content = `<!DOCTYPE html>
+import os
+from pathlib import Path
+
+OUTPUT_DIR = Path(".")
+
+NETTO_VALUES = list(range(1000, 10001, 100))
+STUNDENLOHN_VALUES = list(range(1000, 8001, 1000))
+
+AFFILIATE_URL = "https://www.check24.net/"
+BASE_URL = "https://chrisv93.github.io/rechner/"
+
+CSS = """
+body{font-family:Arial,sans-serif;max-width:960px;margin:0 auto;padding:20px;line-height:1.6}
+a{color:#0a58ca;text-decoration:none}
+a:hover{text-decoration:underline}
+.box{background:#f5f7fa;border:1px solid #ddd;padding:15px;margin:20px 0;border-radius:8px}
+.footer-links{margin-top:40px;padding-top:20px;border-top:1px solid #ddd}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
+"""
+
+def calc_netto(brutto):
+    if brutto <= 2000: f=0.74
+    elif brutto <= 3000: f=0.72
+    elif brutto <= 4000: f=0.70
+    elif brutto <= 5000: f=0.68
+    elif brutto <= 7000: f=0.66
+    else: f=0.64
+    return int(brutto*f/50)*50
+
+def euro(x):
+    return f"{x}€"
+
+def netto_file(x):
+    return f"netto-{x}-brutto.html"
+
+def stunden_file(x):
+    return f"stundenlohn-{x}.html"
+
+def footer_links():
+    links = []
+    for v in [1000,1500,2000,2500,3000,3500,4000,4500,5000,6000,7000,8000]:
+        links.append(f'<a href="{netto_file(v)}">{v}€ brutto</a>')
+    return " | ".join(links)
+
+def page(brutto):
+    netto = calc_netto(brutto)
+    return f"""<!DOCTYPE html>
 <html lang="de">
 <head>
 <meta charset="UTF-8">
-<title>Netto bei ${i} Brutto Deutschland</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Netto bei {euro(brutto)} brutto</title>
+<meta name="description" content="Netto bei {euro(brutto)} brutto berechnen">
+<link rel="canonical" href="{BASE_URL}{netto_file(brutto)}">
+<style>{CSS}</style>
 </head>
 <body>
 
-<h1>Netto bei ${i}€ Brutto in Deutschland</h1>
+<h1>Netto bei {euro(brutto)} brutto</h1>
 
-<p>Wenn du ${i} Euro brutto verdienst, liegt dein geschätztes Nettogehalt bei etwa ${netto} Euro pro Monat. Die genaue Höhe hängt von Steuerklasse, Krankenversicherung und Bundesland ab.</p>
+<div class="box">
+<strong>{euro(netto)} netto</strong>
+</div>
 
-<h2>${i}€ brutto in netto</h2>
-<p>Bei durchschnittlichen Abzügen von ca. 30% ergibt sich ein Netto von rund ${netto}€.</p>
+<p>Bei {euro(brutto)} brutto bleiben ca. {euro(netto)} netto übrig.</p>
 
-<h2>Was beeinflusst dein Netto?</h2>
-<p>Steuerklasse, Kirchensteuer, Krankenversicherung und Bundesland haben Einfluss auf dein tatsächliches Nettogehalt.</p>
+<h2>Ähnliche Werte</h2>
+<ul>
+<li><a href="{netto_file(brutto-100)}">{euro(brutto-100)}</a></li>
+<li><a href="{netto_file(brutto+100)}">{euro(brutto+100)}</a></li>
+<li><a href="{netto_file(brutto+500)}">{euro(brutto+500)}</a></li>
+</ul>
 
-<a href="index.html">Zum Brutto Netto Rechner</a>
+<div class="box">
+<a href="{AFFILIATE_URL}" target="_blank" rel="nofollow sponsored">
+Jetzt sparen & vergleichen
+</a>
+</div>
+
+<div class="footer-links">
+<strong>Beliebte Rechner:</strong><br>
+{footer_links()}
+</div>
 
 </body>
-</html>`;
+</html>"""
 
-        let blob = new Blob([content], { type: "text/html" });
-        let link = document.createElement("a");
+def index():
+    links = "\n".join([f'<li><a href="{netto_file(v)}">{v}€ brutto</a></li>' for v in NETTO_VALUES[:50]])
+    return f"""<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Brutto Netto Rechner</title>
+<link rel="canonical" href="{BASE_URL}">
+<style>{CSS}</style>
+</head>
+<body>
 
-        link.href = URL.createObjectURL(blob);
-        link.download = `netto-${i}-brutto.html`;
+<h1>Brutto Netto Rechner</h1>
 
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-    }
-}
-</script>
+<ul>
+{links}
+</ul>
+
+<div class="footer-links">
+{footer_links()}
+</div>
+
+</body>
+</html>"""
+
+def main():
+    for v in NETTO_VALUES:
+        (OUTPUT_DIR / netto_file(v)).write_text(page(v), encoding="utf-8")
+    (OUTPUT_DIR / "index.html").write_text(index(), encoding="utf-8")
+
+if __name__ == "__main__":
+    main()
