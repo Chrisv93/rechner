@@ -5,6 +5,7 @@ from pathlib import Path
 OUTPUT_DIR = Path(".")
 
 NETTO_VALUES = list(range(1000, 10001, 100))
+
 AFFILIATE_URL = "https://www.check24.net/"
 BASE_URL = "https://chrisv93.github.io/rechner/"
 
@@ -49,9 +50,9 @@ def page(brutto):
 
 <h2>Ähnliche Werte</h2>
 <ul>
-<li><a href="{netto_file(brutto-100)}">{euro(brutto-100)}</a></li>
-<li><a href="{netto_file(brutto+100)}">{euro(brutto+100)}</a></li>
-<li><a href="{netto_file(brutto+500)}">{euro(brutto+500)}</a></li>
+<li><a href="{netto_file(max(1000, brutto-100))}">{euro(max(1000, brutto-100))}</a></li>
+<li><a href="{netto_file(min(10000, brutto+100))}">{euro(min(10000, brutto+100))}</a></li>
+<li><a href="{netto_file(min(10000, brutto+500))}">{euro(min(10000, brutto+500))}</a></li>
 </ul>
 
 <p>
