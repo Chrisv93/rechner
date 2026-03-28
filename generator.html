@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="de">
 <head>
@@ -27,6 +28,14 @@ function fileName(v){
   return "netto-"+v+"-brutto.html";
 }
 
+function related(v){
+  return `
+<li><a href="netto-${v-100}-brutto.html">${v-100}€ brutto</a></li>
+<li><a href="netto-${v+100}-brutto.html">${v+100}€ brutto</a></li>
+<li><a href="netto-${v+500}-brutto.html">${v+500}€ brutto</a></li>
+`;
+}
+
 function page(v){
   let netto = calcNetto(v);
 
@@ -34,14 +43,33 @@ function page(v){
 <html lang="de">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Netto bei ${v}€ brutto</title>
+<meta name="description" content="Wie viel Netto bei ${v}€ brutto? Jetzt berechnen und vergleichen.">
 </head>
 <body>
 
 <h1>Netto bei ${v}€ brutto</h1>
-<p>${netto}€ netto</p>
 
-<a href="index.html">Zurück</a>
+<p><strong>${netto}€ netto</strong></p>
+
+<p>Bei ${v}€ brutto bleiben ca. ${netto}€ netto übrig.</p>
+
+<h2>Ähnliche Gehälter</h2>
+<ul>
+${related(v)}
+</ul>
+
+<h2>Mehr Geld sparen</h2>
+<p>Vergleiche jetzt deine Fixkosten und optimiere dein Netto.</p>
+
+<p>
+<a href="https://www.check24.de/" target="_blank">
+Jetzt vergleichen
+</a>
+</p>
+
+<p><a href="index.html">Zurück zum Rechner</a></p>
 
 </body>
 </html>`;
