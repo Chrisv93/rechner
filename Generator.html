@@ -1,265 +1,89 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Netto Seiten Generator</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 20px;
-      line-height: 1.6;
-      color: #111;
-      background: #fff;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Netto Seiten Generator</title>
 
-    h1, h2 {
-      line-height: 1.25;
-    }
+<style>
+body {
+  font-family: Arial, sans-serif;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px;
+}
+button {
+  padding: 12px 18px;
+  font-size: 16px;
+  cursor: pointer;
+}
+</style>
 
-    .box {
-      background: #f5f7fa;
-      border: 1px solid #d9dee5;
-      border-radius: 10px;
-      padding: 18px;
-      margin: 20px 0;
-    }
-
-    button {
-      font-size: 16px;
-      padding: 12px 18px;
-      border: 0;
-      border-radius: 8px;
-      cursor: pointer;
-      background: #0a58ca;
-      color: #fff;
-      font-weight: bold;
-    }
-  </style>
 </head>
 <body>
 
-  <h1>Netto Seiten Generator</h1>
+<h1>Netto Seiten Generator</h1>
 
-  <div class="box">
-    <p>Dieser Generator erstellt alle Netto-Seiten als ZIP-Datei. Die Seiten enthalten SEO-Text, interne Links und neutrale CTA-Blöcke.</p>
-    <button type="button" onclick="generate()">Seiten generieren (ZIP)</button>
-  </div>
+<button onclick="generate()">Seiten generieren (ZIP)</button>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-  <script>
-    function calcNetto(brutto) {
-      if (brutto <= 2000) return Math.round(brutto * 0.74 / 50) * 50;
-      if (brutto <= 3000) return Math.round(brutto * 0.72 / 50) * 50;
-      if (brutto <= 4000) return Math.round(brutto * 0.70 / 50) * 50;
-      if (brutto <= 5000) return Math.round(brutto * 0.68 / 50) * 50;
-      if (brutto <= 7000) return Math.round(brutto * 0.66 / 50) * 50;
-      return Math.round(brutto * 0.64 / 50) * 50;
-    }
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 
-    function euro(value) {
-      return value + "€";
-    }
+<script>
+function calcNetto(brutto){
+  if(brutto<=2000) return Math.round(brutto*0.74/50)*50;
+  if(brutto<=3000) return Math.round(brutto*0.72/50)*50;
+  if(brutto<=4000) return Math.round(brutto*0.70/50)*50;
+  if(brutto<=5000) return Math.round(brutto*0.68/50)*50;
+  if(brutto<=7000) return Math.round(brutto*0.66/50)*50;
+  return Math.round(brutto*0.64/50)*50;
+}
 
-    function nettoFile(value) {
-      return "netto-" + value + "-brutto.html";
-    }
+function fileName(v){
+  return "netto-"+v+"-brutto.html";
+}
 
-    function buildRelatedLinks(brutto) {
-      const values = [
-        Math.max(1000, brutto - 200),
-        Math.max(1000, brutto - 100),
-        Math.min(10000, brutto + 100),
-        Math.min(10000, brutto + 200),
-        Math.min(10000, brutto + 500)
-      ];
+function page(v){
+  let netto = calcNetto(v);
 
-      const uniqueValues = [...new Set(values)];
-      let html = "";
-
-      for (const value of uniqueValues) {
-        if (value !== brutto) {
-          html += '<li><a href="' + nettoFile(value) + '">Netto bei ' + euro(value) + ' brutto</a></li>';
-        }
-      }
-
-      return html;
-    }
-
-    function buildFooterLinks() {
-      const values = [1500, 2000, 2500, 3000, 3500, 4000, 5000, 6000];
-      let html = "";
-
-      for (const value of values) {
-        html += '<li><a href="' + nettoFile(value) + '">Netto bei ' + euro(value) + ' brutto</a></li>';
-      }
-
-      return html;
-    }
-
-    function buildPage(brutto) {
-      const netto = calcNetto(brutto);
-      const title = "Netto bei " + euro(brutto) + " brutto";
-      const description = "Wie viel Netto bleibt bei " + euro(brutto) + " brutto? Hier findest du eine schnelle Übersicht, passende Vergleichswerte und weitere Rechner.";
-      const relatedLinks = buildRelatedLinks(brutto);
-      const footerLinks = buildFooterLinks();
-
-      return `<!DOCTYPE html>
+  return `<!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>${title}</title>
-  <meta name="description" content="${description}">
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      max-width: 980px;
-      margin: 0 auto;
-      padding: 20px;
-      line-height: 1.6;
-      color: #111;
-      background: #fff;
-    }
-
-    h1, h2, h3 {
-      line-height: 1.25;
-      margin-top: 0;
-    }
-
-    a {
-      color: #0a58ca;
-      text-decoration: none;
-    }
-
-    a:hover {
-      text-decoration: underline;
-    }
-
-    .box {
-      background: #f5f7fa;
-      border: 1px solid #d9dee5;
-      border-radius: 10px;
-      padding: 18px;
-      margin: 20px 0;
-    }
-
-    .cta {
-      background: #eef6ff;
-      border: 1px solid #bfd7ff;
-      border-radius: 10px;
-      padding: 18px;
-      margin: 24px 0;
-    }
-
-    .button {
-      display: inline-block;
-      padding: 12px 18px;
-      background: #0a58ca;
-      color: #fff;
-      border-radius: 8px;
-      text-decoration: none;
-      font-weight: bold;
-    }
-
-    .button:hover {
-      text-decoration: none;
-      opacity: 0.92;
-    }
-
-    ul {
-      padding-left: 20px;
-    }
-
-    .small {
-      font-size: 14px;
-      color: #555;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Netto bei ${v}€ brutto</title>
+<meta name="description" content="Netto bei ${v}€ brutto berechnen.">
 </head>
 <body>
 
-  <h1>${title}</h1>
+<h1>Netto bei ${v}€ brutto</h1>
 
-  <div class="cta">
-    <h2>Mehr aus deinem Gehalt machen</h2>
-    <p>
-      Wenn du weißt, wie viel Netto bei ${euro(brutto)} brutto übrig bleibt, kannst du deine nächsten Geldentscheidungen gezielter treffen.
-      Genau dafür lohnt sich ein direkter Vergleich bei typischen Fixkosten und Finanzprodukten.
-    </p>
-    <p>
-      <a class="button" href="https://www.check24.de/" target="_blank" rel="nofollow sponsored">Jetzt vergleichen</a>
-    </p>
-  </div>
+<p><strong>${netto}€ netto</strong></p>
 
-  <div class="box">
-    <p><strong>Ergebnis:</strong> ca. <strong>${euro(netto)} netto</strong></p>
-    <p class="small">Orientierungswert für Deutschland. Der genaue Netto-Betrag hängt von persönlichen Daten und Abgaben ab.</p>
-  </div>
+<p>Bei ${v}€ brutto bleiben ca. ${netto}€ netto übrig.</p>
 
-  <div class="box">
-    <h2>Wie viel Netto bleibt bei ${euro(brutto)} brutto?</h2>
-    <p>
-      Wer nach ${euro(brutto)} brutto in netto sucht, möchte meist schnell einschätzen, was monatlich wirklich ankommt.
-      Genau dafür ist diese Seite gemacht. Du siehst hier einen klaren Richtwert und kannst ihn direkt mit ähnlichen Gehaltsstufen vergleichen.
-    </p>
-    <p>
-      Gerade bei Gehaltsverhandlungen, Jobwechseln oder beim Vergleich verschiedener Stellen ist der Unterschied zwischen Brutto und Netto entscheidend.
-      Schon wenige hundert Euro brutto mehr oder weniger können sich im Netto deutlich bemerkbar machen.
-    </p>
-    <p>
-      Deshalb lohnt es sich, nicht nur einen Wert anzuschauen, sondern auch angrenzende Gehaltsstufen zu prüfen.
-      So bekommst du schneller ein realistisches Gefühl dafür, welcher Bereich für dich sinnvoll ist.
-    </p>
-  </div>
-
-  <div class="box">
-    <h2>Ähnliche Gehaltsstufen</h2>
-    <ul>
-      ${relatedLinks}
-    </ul>
-  </div>
-
-  <div class="box">
-    <h2>Weitere beliebte Rechner</h2>
-    <ul>
-      <li><a href="index.html">Brutto Netto Rechner Startseite</a></li>
-      <li><a href="stundenlohn-${brutto}.html">Stundenlohn bei ${euro(brutto)} brutto</a></li>
-      ${footerLinks}
-    </ul>
-  </div>
-
-  <div class="cta">
-    <h2>Jetzt passende Vergleiche ansehen</h2>
-    <p>
-      Der nächste logische Schritt nach dem Netto-Vergleich ist die Optimierung deiner monatlichen Ausgaben.
-    </p>
-    <p>
-      <a class="button" href="https://www.check24.de/" target="_blank" rel="nofollow sponsored">Jetzt vergleichen</a>
-    </p>
-  </div>
+<p>
+<a href="index.html">Zurück zum Rechner</a>
+</p>
 
 </body>
 </html>`;
-    }
+}
 
-    function generate() {
-      const zip = new JSZip();
+function generate(){
+  let zip = new JSZip();
 
-      for (let brutto = 1000; brutto <= 10000; brutto += 50) {
-        zip.file(nettoFile(brutto), buildPage(brutto));
-      }
+  for(let v=1000; v<=10000; v+=100){
+    zip.file(fileName(v), page(v));
+  }
 
-      zip.generateAsync({ type: "blob" }).then(function(content) {
-        const a = document.createElement("a");
-        a.href = URL.createObjectURL(content);
-        a.download = "netto-seiten.zip";
-        a.click();
-      });
-    }
-  </script>
+  zip.generateAsync({type:"blob"}).then(function(content){
+    let a = document.createElement("a");
+    a.href = URL.createObjectURL(content);
+    a.download = "netto-seiten.zip";
+    a.click();
+  });
+}
+</script>
 
 </body>
 </html>
