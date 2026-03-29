@@ -9,7 +9,7 @@
 <body>
 
 <h1>SEO Seiten Generator</h1>
-<p>Erstellt automatisch alle Netto-Seiten mit CTA und internen Links.</p>
+<p>Erstellt automatisch alle Netto-Seiten mit doppelter Monetarisierung.</p>
 
 <button onclick="generate()">Seiten generieren & downloaden</button>
 
@@ -55,15 +55,18 @@ return `<!DOCTYPE html>
 
 <p><strong>Ergebnis: ca. ${n}€ netto</strong></p>
 
-<p>Wenn du ${v}€ brutto verdienst, bleiben dir ungefähr ${n}€ netto übrig. Der genaue Betrag hängt von Steuerklasse, Bundesland und Versicherungen ab.</p>
+<p>Wenn du ${v}€ brutto verdienst, bleiben dir ungefähr ${n}€ netto übrig.</p>
 
-<h2>Mehr Netto behalten (kostenlos)</h2>
+<!-- CTA TOP -->
+<div style="background:#e8f0fe;padding:20px;border-radius:10px;margin:25px 0;text-align:center;border:1px solid #c6dafc">
 
-<div style="background:#f5f7fa;padding:20px;border-radius:10px;margin:30px 0;text-align:center;border:1px solid #ddd">
+<h2>⚡ Mehr Netto behalten – jetzt prüfen</h2>
 
-<p>Viele Menschen verschenken jeden Monat Geld bei Strom, Versicherungen oder Konto. Hier kannst du das kostenlos prüfen:</p>
+<p><strong>Viele zahlen zu viel für Strom, Versicherungen oder Konto.</strong></p>
 
-<a href="https://www.check24.de" target="_blank" rel="nofollow sponsored noopener" style="display:inline-block;margin-top:10px;padding:14px 22px;background:#2c7be5;color:#fff;text-decoration:none;border-radius:6px;font-weight:bold;">
+<p>👉 Spare oft mehrere hundert Euro pro Jahr – kostenloser Vergleich.</p>
+
+<a href="https://www.check24.de" target="_blank" rel="nofollow sponsored noopener" style="display:inline-block;margin-top:12px;padding:14px 24px;background:#0b57d0;color:#fff;text-decoration:none;border-radius:6px;font-weight:bold;">
 Jetzt kostenlos vergleichen
 </a>
 
@@ -73,6 +76,19 @@ Jetzt kostenlos vergleichen
 <ul>
 ${links(v)}
 </ul>
+
+<!-- CTA BOTTOM -->
+<div style="background:#f5f7fa;padding:20px;border-radius:10px;margin:30px 0;text-align:center;border:1px solid #ddd">
+
+<h2>💰 Noch mehr sparen?</h2>
+
+<p>Vergleiche jetzt kostenlos die besten Angebote für deine Situation.</p>
+
+<a href="https://www.check24.de" target="_blank" rel="nofollow sponsored noopener" style="display:inline-block;margin-top:10px;padding:14px 22px;background:#2c7be5;color:#fff;text-decoration:none;border-radius:6px;font-weight:bold;">
+Kostenlosen Vergleich starten
+</a>
+
+</div>
 
 <p><a href="index.html">Zurück zur Übersicht</a></p>
 
@@ -90,7 +106,7 @@ function generate(){
  zip.generateAsync({type:"blob"}).then(function(content){
   let a=document.createElement("a");
   a.href=URL.createObjectURL(content);
-  a.download="seo-netto-seiten.zip";
+  a.download="seo-netto-seiten-boost.zip";
   a.click();
  });
 }
