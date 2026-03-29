@@ -4,14 +4,57 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SEO Generator – Netto Seiten</title>
+
+<style>
+body {
+ font-family: Arial, sans-serif;
+ margin: 0;
+ background: #f9f9f9;
+}
+
+.container {
+ max-width: 800px;
+ margin: 0 auto;
+ padding: 20px;
+ background: #fff;
+}
+
+h1, h2 {
+ text-align: center;
+}
+
+p {
+ text-align: center;
+}
+
+ul {
+ text-align: left;
+}
+
+.button {
+ display: inline-block;
+ margin-top: 12px;
+ padding: 14px 24px;
+ background: #0b57d0;
+ color: #fff;
+ text-decoration: none;
+ border-radius: 6px;
+ font-weight: bold;
+}
+</style>
+
 </head>
 
 <body>
 
+<div class="container">
+
 <h1>SEO Seiten Generator</h1>
-<p>Erstellt automatisch alle Netto-Seiten mit doppelter Monetarisierung.</p>
+<p>Erstellt alle Seiten mit perfektem Layout + Monetarisierung.</p>
 
 <button onclick="generate()">Seiten generieren & downloaden</button>
+
+</div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 
@@ -25,12 +68,10 @@ function netto(b){
  return Math.round(b*0.64/50)*50;
 }
 
-function links(v){
+function manyLinks(){
  let l="";
- for(let i=v-300;i<=v+300;i+=100){
-  if(i>=1000 && i<=10000 && i!==v){
+ for(let i=1000;i<=10000;i+=500){
    l+=`<li><a href="netto-${i}-brutto.html">${i}€ brutto → netto</a></li>`;
-  }
  }
  return l;
 }
@@ -45,11 +86,51 @@ return `<!DOCTYPE html>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>${v}€ brutto → netto 2026 Rechner</title>
-<meta name="description" content="Wie viel netto bleibt bei ${v}€ brutto? Jetzt einfach berechnen.">
+<meta name="description" content="Wie viel netto bleibt bei ${v}€ brutto? Jetzt berechnen.">
+
+<style>
+body {
+ font-family: Arial, sans-serif;
+ margin: 0;
+ background: #f9f9f9;
+}
+
+.container {
+ max-width: 800px;
+ margin: 0 auto;
+ padding: 20px;
+ background: #fff;
+}
+
+h1, h2 {
+ text-align: center;
+}
+
+p {
+ text-align: center;
+}
+
+ul {
+ text-align: left;
+}
+
+.button {
+ display: inline-block;
+ margin-top: 12px;
+ padding: 14px 24px;
+ background: #0b57d0;
+ color: #fff;
+ text-decoration: none;
+ border-radius: 6px;
+ font-weight: bold;
+}
+</style>
 
 </head>
 
 <body>
+
+<div class="container">
 
 <h1>${v}€ brutto in netto – Rechner 2026</h1>
 
@@ -59,38 +140,31 @@ return `<!DOCTYPE html>
 
 <!-- CTA TOP -->
 <div style="background:#e8f0fe;padding:20px;border-radius:10px;margin:25px 0;text-align:center;border:1px solid #c6dafc">
-
 <h2>⚡ Mehr Netto behalten – jetzt prüfen</h2>
-
 <p><strong>Viele zahlen zu viel für Strom, Versicherungen oder Konto.</strong></p>
-
-<p>👉 Spare oft mehrere hundert Euro pro Jahr – kostenloser Vergleich.</p>
-
-<a href="https://www.check24.de" target="_blank" rel="nofollow sponsored noopener" style="display:inline-block;margin-top:12px;padding:14px 24px;background:#0b57d0;color:#fff;text-decoration:none;border-radius:6px;font-weight:bold;">
+<p>👉 Spare oft mehrere hundert Euro pro Jahr – kostenlos.</p>
+<a href="https://www.check24.de" target="_blank" rel="nofollow sponsored noopener" class="button">
 Jetzt kostenlos vergleichen
 </a>
-
 </div>
 
-<h2>Ähnliche Gehälter</h2>
+<h2>Beliebte Gehälter</h2>
 <ul>
-${links(v)}
+${manyLinks()}
 </ul>
 
 <!-- CTA BOTTOM -->
 <div style="background:#f5f7fa;padding:20px;border-radius:10px;margin:30px 0;text-align:center;border:1px solid #ddd">
-
 <h2>💰 Noch mehr sparen?</h2>
-
-<p>Vergleiche jetzt kostenlos die besten Angebote für deine Situation.</p>
-
-<a href="https://www.check24.de" target="_blank" rel="nofollow sponsored noopener" style="display:inline-block;margin-top:10px;padding:14px 22px;background:#2c7be5;color:#fff;text-decoration:none;border-radius:6px;font-weight:bold;">
+<p>Jetzt kostenlos Angebote vergleichen und mehr Netto behalten.</p>
+<a href="https://www.check24.de" target="_blank" rel="nofollow sponsored noopener" class="button">
 Kostenlosen Vergleich starten
 </a>
-
 </div>
 
 <p><a href="index.html">Zurück zur Übersicht</a></p>
+
+</div>
 
 </body>
 </html>`;
@@ -106,7 +180,7 @@ function generate(){
  zip.generateAsync({type:"blob"}).then(function(content){
   let a=document.createElement("a");
   a.href=URL.createObjectURL(content);
-  a.download="seo-netto-seiten-boost.zip";
+  a.download="seo-netto-design.zip";
   a.click();
  });
 }
