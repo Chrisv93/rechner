@@ -3,14 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Money SEO Generator</title>
+<title>Fix Generator</title>
 </head>
 
 <body>
 
-<h1>Money SEO Generator</h1>
+<h1>Fix Generator (keine 404 mehr)</h1>
 
-<button onclick="generate()">ALLE Seiten neu generieren</button>
+<button onclick="generate()">Seiten neu generieren</button>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 
@@ -24,34 +24,17 @@ function netto(b){
  return Math.round(b*0.64/50)*50;
 }
 
-function links(v,type){
+function links(v){
  let l="";
- for(let i=v-500;i<=v+500;i+=100){
+ for(let i=v-300;i<=v+300;i+=100){
   if(i>=1000 && i<=10000 && i!==v){
-   if(type==="netto"){
-    l+=`<li><a href="netto-${i}-brutto.html">${i}€ brutto → netto</a></li>`;
-   }else{
-    l+=`<li><a href="stundenlohn-${i}.html">${i}€ Gehalt → Stundenlohn</a></li>`;
-   }
+   l+=`<li><a href="netto-${i}-brutto.html">${i}€ brutto → netto</a></li>`;
   }
  }
  return l;
 }
 
-function cta(){
-return `
-<div style="background:#eef6ff;padding:20px;border-radius:10px;margin:20px 0;text-align:center;">
-<strong>Spare jeden Monat Geld</strong><br>
-Vergleiche jetzt Versicherungen, Strom und Kredite und erhöhe dein Netto.
-<br><br>
-<a href="https://www.check24.de/" target="_blank" style="display:inline-block;padding:12px 18px;background:#0a58ca;color:#fff;text-decoration:none;border-radius:6px;">
-Jetzt kostenlos vergleichen
-</a>
-</div>
-`;
-}
-
-function pageNetto(v){
+function page(v){
  let n=netto(v);
 
 return `<!DOCTYPE html>
@@ -60,8 +43,8 @@ return `<!DOCTYPE html>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>${v}€ brutto → netto 2026 – Rechner & Vergleich</title>
-<meta name="description" content="Wie viel Netto bleibt bei ${v}€ brutto? Jetzt berechnen und vergleichen.">
+<title>${v}€ brutto → netto 2026</title>
+<meta name="description" content="Netto bei ${v}€ brutto berechnen.">
 
 </head>
 
@@ -69,53 +52,14 @@ return `<!DOCTYPE html>
 
 <h1>${v}€ brutto → netto</h1>
 
-${cta()}
-
 <p><strong>≈ ${n}€ netto</strong></p>
 
-<p>
-Bei ${v}€ brutto bleiben ca. ${n}€ netto übrig. 
-Der genaue Betrag hängt von Steuerklasse und Abgaben ab.
-</p>
+<p>Bei ${v}€ brutto bleiben ca. ${n}€ netto.</p>
 
 <h2>Ähnliche Gehälter</h2>
-<ul>${links(v,"netto")}</ul>
-
-${cta()}
-
-<p><a href="index.html">Zurück</a></p>
-
-</body>
-</html>`;
-}
-
-function pageStunden(v){
- let n=netto(v);
- let s=Math.round(n/160);
-
-return `<!DOCTYPE html>
-<html lang="de">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>${v}€ Gehalt → Stundenlohn ${s}€</title>
-<meta name="description" content="Stundenlohn bei ${v}€ Gehalt berechnen.">
-
-</head>
-
-<body>
-
-<h1>${v}€ Gehalt → ${s}€ Stundenlohn</h1>
-
-${cta()}
-
-<p>Bei ${v}€ Gehalt entspricht das ca. ${s}€ pro Stunde.</p>
-
-<h2>Ähnliche Werte</h2>
-<ul>${links(v,"stunden")}</ul>
-
-${cta()}
+<ul>
+${links(v)}
+</ul>
 
 <p><a href="index.html">Zurück</a></p>
 
@@ -126,15 +70,14 @@ ${cta()}
 function generate(){
  let zip=new JSZip();
 
- for(let v=1000;v<=10000;v+=50){
-  zip.file(`netto-${v}-brutto.html`,pageNetto(v));
-  zip.file(`stundenlohn-${v}.html`,pageStunden(v));
+ for(let v=1000;v<=10000;v+=100){
+  zip.file(`netto-${v}-brutto.html`,page(v));
  }
 
  zip.generateAsync({type:"blob"}).then(function(content){
   let a=document.createElement("a");
   a.href=URL.createObjectURL(content);
-  a.download="money-pages.zip";
+  a.download="fix-seiten.zip";
   a.click();
  });
 }
