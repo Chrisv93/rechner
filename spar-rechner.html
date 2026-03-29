@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Wie viel kannst du monatlich sparen? Rechner</title>
+<meta name="description" content="Berechne dein Sparpotenzial und finde heraus, wie du monatlich mehr Geld behältst.">
+
+<style>
+body {
+ font-family: Arial;
+ background:#f4f6f8;
+ margin:0;
+}
+
+.container {
+ max-width:600px;
+ margin:40px auto;
+ background:#fff;
+ padding:25px;
+ border-radius:10px;
+ text-align:center;
+}
+
+input {
+ padding:10px;
+ width:80%;
+ margin:10px 0;
+}
+
+.button {
+ display:inline-block;
+ margin-top:15px;
+ padding:14px 24px;
+ background:#0b57d0;
+ color:#fff;
+ text-decoration:none;
+ border-radius:6px;
+ font-weight:bold;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Wie viel Geld kannst du sparen?</h1>
+
+<p>Gib deine monatlichen Kosten ein:</p>
+
+<input id="kosten" placeholder="z.B. 1500€">
+
+<br>
+
+<button onclick="calc()">Berechnen</button>
+
+<h2 id="result"></h2>
+
+<div id="cta" style="display:none;">
+
+<p>👉 Viele sparen 100–300€ monatlich durch Wechsel</p>
+
+<a href="https://www.check24.de/girokonto/" target="_blank" class="button">
+Jetzt kostenlos vergleichen
+</a>
+
+</div>
+
+</div>
+
+<script>
+function calc(){
+ let k = document.getElementById("kosten").value;
+ let sparen = Math.round(k * 0.15);
+
+ document.getElementById("result").innerHTML = 
+ "Du könntest ca. " + sparen + "€ monatlich sparen";
+
+ document.getElementById("cta").style.display = "block";
+}
+</script>
+
+</body>
+</html>
