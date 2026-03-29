@@ -3,120 +3,35 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SEO Generator</title>
-
-<style>
-body {
- font-family: Arial, sans-serif;
- margin: 0;
- background: #f4f6f8;
-}
-
-.container {
- max-width: 800px;
- margin: 40px auto;
- padding: 25px;
- background: #ffffff;
- border-radius: 10px;
- box-shadow: 0 0 10px rgba(0,0,0,0.05);
-}
-
-h1, h2, p {
- text-align: center;
-}
-
-ul {
- text-align: left;
-}
-
-.button {
- display: inline-block;
- margin-top: 15px;
- padding: 14px 24px;
- background: #0b57d0;
- color: #fff;
- text-decoration: none;
- border-radius: 6px;
- font-weight: bold;
-}
-</style>
-
+<title>Auto Money Generator</title>
 </head>
 
 <body>
 
-<div class="container">
-<h1>Generator</h1>
-<button onclick="generate()">Seiten generieren</button>
-</div>
+<h1>Auto Money Generator</h1>
+<button onclick="generate()">ALLE GELD-SEITEN GENERIEREN</button>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 
 <script>
-function netto(b){
- if(b<=2000)return Math.round(b*0.74/50)*50;
- if(b<=3000)return Math.round(b*0.72/50)*50;
- if(b<=4000)return Math.round(b*0.70/50)*50;
- if(b<=5000)return Math.round(b*0.68/50)*50;
- if(b<=7000)return Math.round(b*0.66/50)*50;
- return Math.round(b*0.64/50)*50;
-}
 
-function links(v){
- let l="";
- for(let i=v-300;i<=v+300;i+=100){
-  if(i>=1000 && i<=10000 && i!==v){
-   l+=`<li><a href="netto-${i}-brutto.html">${i}€ brutto → netto</a></li>`;
-  }
- }
- return l;
-}
+const values = [1000,1500,2000,2500,3000,3500,4000,4500,5000];
 
 function page(v){
- let n=netto(v);
+ let sparen = Math.round(v * 0.15);
 
-return `<!DOCTYPE html>
+ return `<!DOCTYPE html>
 <html lang="de">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>${v}€ brutto → netto 2026</title>
+<title>Wie viel sparen bei ${v}€ Einkommen?</title>
 
 <style>
-body {
- font-family: Arial, sans-serif;
- margin: 0;
- background: #f4f6f8;
-}
-
-.container {
- max-width: 800px;
- margin: 40px auto;
- padding: 25px;
- background: #ffffff;
- border-radius: 10px;
- box-shadow: 0 0 10px rgba(0,0,0,0.05);
-}
-
-h1, h2, p {
- text-align: center;
-}
-
-ul {
- text-align: left;
-}
-
-.button {
- display: inline-block;
- margin-top: 15px;
- padding: 14px 24px;
- background: #0b57d0;
- color: #fff;
- text-decoration: none;
- border-radius: 6px;
- font-weight: bold;
-}
+body{font-family:Arial;background:#f4f6f8;margin:0}
+.container{max-width:600px;margin:40px auto;background:#fff;padding:25px;border-radius:10px;text-align:center}
+.button{display:inline-block;margin-top:15px;padding:14px 24px;background:#0b57d0;color:#fff;text-decoration:none;border-radius:6px;font-weight:bold}
 </style>
 
 </head>
@@ -125,26 +40,15 @@ ul {
 
 <div class="container">
 
-<h1>${v}€ brutto in netto – Rechner 2026</h1>
+<h1>Wie viel kannst du bei ${v}€ sparen?</h1>
 
-<p><strong>≈ ${n}€ netto</strong></p>
+<p>Viele sparen bis zu ${sparen}€ monatlich durch einfache Wechsel.</p>
 
-<p>Bei ${v}€ brutto bleiben ca. ${n}€ netto.</p>
+<p><strong>Jetzt kostenlos prüfen:</strong></p>
 
-<div style="background:#e8f0fe;padding:20px;border-radius:10px;margin:25px 0;">
-<h2>Mehr Netto behalten</h2>
-<p>Spare Geld bei Strom, Versicherungen oder Konto.</p>
 <a href="https://www.check24.de/girokonto/" target="_blank" class="button">
 Jetzt kostenlos vergleichen
 </a>
-</div>
-
-<h2>Ähnliche Gehälter</h2>
-<ul>
-${links(v)}
-</ul>
-
-<p><a href="index.html">Zurück</a></p>
 
 </div>
 
@@ -155,17 +59,18 @@ ${links(v)}
 function generate(){
  let zip=new JSZip();
 
- for(let v=1000;v<=10000;v+=100){
-  zip.file(`netto-${v}-brutto.html`,page(v));
- }
+ values.forEach(v=>{
+  zip.file(`sparen-${v}.html`,page(v));
+ });
 
  zip.generateAsync({type:"blob"}).then(function(content){
   let a=document.createElement("a");
   a.href=URL.createObjectURL(content);
-  a.download="final-design.zip";
+  a.download="money-pages.zip";
   a.click();
  });
 }
+
 </script>
 
 </body>
