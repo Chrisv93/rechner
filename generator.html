@@ -3,58 +3,151 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SEO Generator – Geld Seiten</title>
-</head>
-
-<body>
-
-<h1>SEO Generator – Geld Keywords</h1>
-<p>Erstellt automatisch neue SEO Seiten mit hoher Suchintention.</p>
-
-<button onclick="generate()">Seiten generieren</button>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-
-<script>
-const keywords = [
-"wie viel netto bei 2000 brutto",
-"wie viel netto bei 2500 brutto",
-"wie viel netto bei 3000 brutto",
-"wie viel netto bei 3500 brutto",
-"wie viel netto bei 4000 brutto",
-"wie viel netto bei 4500 brutto",
-"wie viel netto bei 5000 brutto"
-];
-
-function page(k){
- return `<!DOCTYPE html>
-<html lang="de">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>${k}</title>
-<meta name="description" content="${k} einfach berechnen.">
+<title>SEO Generator</title>
 
 <style>
-body{font-family:Arial;margin:0;background:#f9f9f9}
-.container{max-width:800px;margin:0 auto;padding:20px;background:#fff}
-h1{text-align:center}
-.button{display:inline-block;margin-top:12px;padding:14px 24px;background:#0b57d0;color:#fff;text-decoration:none;border-radius:6px;font-weight:bold}
+body {
+ font-family: Arial, sans-serif;
+ margin: 0;
+ background: #f4f6f8;
+}
+
+.container {
+ max-width: 800px;
+ margin: 40px auto;
+ padding: 25px;
+ background: #ffffff;
+ border-radius: 10px;
+ box-shadow: 0 0 10px rgba(0,0,0,0.05);
+}
+
+h1, h2, p {
+ text-align: center;
+}
+
+ul {
+ text-align: left;
+}
+
+.button {
+ display: inline-block;
+ margin-top: 15px;
+ padding: 14px 24px;
+ background: #0b57d0;
+ color: #fff;
+ text-decoration: none;
+ border-radius: 6px;
+ font-weight: bold;
+}
 </style>
 
 </head>
 
 <body>
+
+<div class="container">
+<h1>Generator</h1>
+<button onclick="generate()">Seiten generieren</button>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+
+<script>
+function netto(b){
+ if(b<=2000)return Math.round(b*0.74/50)*50;
+ if(b<=3000)return Math.round(b*0.72/50)*50;
+ if(b<=4000)return Math.round(b*0.70/50)*50;
+ if(b<=5000)return Math.round(b*0.68/50)*50;
+ if(b<=7000)return Math.round(b*0.66/50)*50;
+ return Math.round(b*0.64/50)*50;
+}
+
+function links(v){
+ let l="";
+ for(let i=v-300;i<=v+300;i+=100){
+  if(i>=1000 && i<=10000 && i!==v){
+   l+=`<li><a href="netto-${i}-brutto.html">${i}€ brutto → netto</a></li>`;
+  }
+ }
+ return l;
+}
+
+function page(v){
+ let n=netto(v);
+
+return `<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>${v}€ brutto → netto 2026</title>
+
+<style>
+body {
+ font-family: Arial, sans-serif;
+ margin: 0;
+ background: #f4f6f8;
+}
+
+.container {
+ max-width: 800px;
+ margin: 40px auto;
+ padding: 25px;
+ background: #ffffff;
+ border-radius: 10px;
+ box-shadow: 0 0 10px rgba(0,0,0,0.05);
+}
+
+h1, h2, p {
+ text-align: center;
+}
+
+ul {
+ text-align: left;
+}
+
+.button {
+ display: inline-block;
+ margin-top: 15px;
+ padding: 14px 24px;
+ background: #0b57d0;
+ color: #fff;
+ text-decoration: none;
+ border-radius: 6px;
+ font-weight: bold;
+}
+</style>
+
+</head>
+
+<body>
+
 <div class="container">
 
-<h1>${k}</h1>
+<h1>${v}€ brutto in netto – Rechner 2026</h1>
 
-<p>Hier kannst du schnell berechnen, wie viel netto du bei deinem Bruttogehalt erhältst.</p>
+<p><strong>≈ ${n}€ netto</strong></p>
 
-<a href="https://chrisv93.github.io/rechner/" class="button">Jetzt Rechner nutzen</a>
+<p>Bei ${v}€ brutto bleiben ca. ${n}€ netto.</p>
+
+<div style="background:#e8f0fe;padding:20px;border-radius:10px;margin:25px 0;">
+<h2>Mehr Netto behalten</h2>
+<p>Spare Geld bei Strom, Versicherungen oder Konto.</p>
+<a href="https://www.check24.de/girokonto/" target="_blank" class="button">
+Jetzt kostenlos vergleichen
+</a>
+</div>
+
+<h2>Ähnliche Gehälter</h2>
+<ul>
+${links(v)}
+</ul>
+
+<p><a href="index.html">Zurück</a></p>
 
 </div>
+
 </body>
 </html>`;
 }
@@ -62,14 +155,14 @@ h1{text-align:center}
 function generate(){
  let zip=new JSZip();
 
- keywords.forEach((k,i)=>{
-  zip.file(`frage-${i}.html`,page(k));
- });
+ for(let v=1000;v<=10000;v+=100){
+  zip.file(`netto-${v}-brutto.html`,page(v));
+ }
 
  zip.generateAsync({type:"blob"}).then(function(content){
   let a=document.createElement("a");
   a.href=URL.createObjectURL(content);
-  a.download="seo-fragen.zip";
+  a.download="final-design.zip";
   a.click();
  });
 }
