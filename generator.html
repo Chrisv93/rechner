@@ -65,7 +65,7 @@ return `<!DOCTYPE html>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>${v}€ brutto → netto Rechner 2026</title>
-<meta name="description" content="Berechne dein Netto bei ${v}€ brutto und finde Sparmöglichkeiten.">
+<meta name="description" content="Berechne dein Netto bei ${v}€ brutto und optimiere deine monatlichen Kosten.">
 
 <style>
 body {
@@ -102,10 +102,6 @@ h1 {
  margin:30px 0;
 }
 
-.cta h2 {
- margin-bottom:10px;
-}
-
 .button {
  display:inline-block;
  padding:14px 22px;
@@ -133,17 +129,17 @@ ul {
 <div class="result">≈ ${n}€ netto</div>
 
 <p style="text-align:center;">
-Bei ${v}€ brutto bleiben dir ungefähr ${n}€ netto. Der genaue Betrag hängt von Steuerklasse und Abgaben ab.
+Bei ${v}€ brutto bleiben dir ungefähr ${n}€ netto. Viele Menschen optimieren zusätzlich ihre monatlichen Kosten.
 </p>
 
-<!-- 🔥 AWIN GELD BLOCK -->
+<!-- 🔥 NEUTRALER BLOCK -->
 <div class="cta">
 
 <h2>Mehr Netto behalten</h2>
 
-<p>Viele zahlen zu viel für Strom, Konto oder Versicherungen.</p>
+<p>Vergleiche jetzt kostenlos verschiedene Anbieter und finde Einsparpotenziale bei Strom, Konto und Versicherungen.</p>
 
-<a href="DEIN_AWIN_LINK_HIER" target="_blank" class="button">
+<a href="https://www.check24.de" target="_blank" class="button">
 Jetzt kostenlos vergleichen
 </a>
 
@@ -175,7 +171,7 @@ function generate(){
  zip.generateAsync({type:"blob"}).then(function(content){
   let a=document.createElement("a");
   a.href=URL.createObjectURL(content);
-  a.download="seiten.zip";
+  a.download="seiten-clean.zip";
   a.click();
  });
 }
