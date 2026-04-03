@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="de">
 <head>
@@ -129,18 +130,18 @@ ul {
 <div class="result">≈ ${n}€ netto</div>
 
 <p style="text-align:center;">
-Bei ${v}€ brutto bleiben dir ungefähr ${n}€ netto. Viele Menschen optimieren zusätzlich ihre monatlichen Kosten.
+Bei ${v}€ brutto bleiben dir ungefähr ${n}€ netto. Viele Menschen sparen zusätzlich mehrere hundert Euro pro Monat durch den Vergleich ihrer Fixkosten.
 </p>
 
-<!-- 🔥 NEUTRALER BLOCK -->
+<!-- 🔥 MONEY CTA -->
 <div class="cta">
 
 <h2>Mehr Netto behalten</h2>
 
-<p>Vergleiche jetzt kostenlos verschiedene Anbieter und finde Einsparpotenziale bei Strom, Konto und Versicherungen.</p>
+<p><strong>Spare bis zu 300€ monatlich</strong> durch den Vergleich von Strom, Konto und Versicherungen.</p>
 
 <a href="https://www.check24.de" target="_blank" class="button">
-Jetzt kostenlos vergleichen
+Jetzt Einsparpotenzial prüfen
 </a>
 
 </div>
@@ -171,7 +172,7 @@ function generate(){
  zip.generateAsync({type:"blob"}).then(function(content){
   let a=document.createElement("a");
   a.href=URL.createObjectURL(content);
-  a.download="seiten-clean.zip";
+  a.download="seiten-money.zip";
   a.click();
  });
 }
