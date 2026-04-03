@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="de">
 <head>
@@ -37,7 +36,6 @@ button {
 
 <script>
 
-// Netto Berechnung
 function netto(b){
  if(b<=2000)return Math.round(b*0.74/50)*50;
  if(b<=3000)return Math.round(b*0.72/50)*50;
@@ -47,7 +45,6 @@ function netto(b){
  return Math.round(b*0.64/50)*50;
 }
 
-// MASTER TEMPLATE
 function layout(title, content){
  return `<!DOCTYPE html>
 <html lang="de">
@@ -55,6 +52,8 @@ function layout(title, content){
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>${title}</title>
+
+<meta name="description" content="${title} berechnen + Spartipps.">
 
 <style>
 body {font-family:Arial;background:#f4f6f9;margin:0;}
@@ -78,9 +77,30 @@ h1{text-align:center;}
  display:inline-block;padding:14px 22px;background:#16a34a;
  color:#fff;text-decoration:none;border-radius:8px;font-weight:bold;margin-top:10px;
 }
+.compare-box{
+ margin-top:30px;
+ background:#ffffff;
+ border:1px solid #e5e7eb;
+ border-radius:12px;
+ padding:20px;
+}
+.compare-item{
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+ padding:12px;
+ border-radius:8px;
+ background:#f9fafb;
+ margin-bottom:10px;
+}
 .section{margin-top:30px;}
 .section h2{text-align:center;}
 ul{line-height:1.9;}
+.seo{
+ margin-top:40px;
+ color:#374151;
+ line-height:1.7;
+}
 </style>
 
 </head>
@@ -99,6 +119,63 @@ ${content}
 </html>`;
 }
 
+function compareBlock(){
+ return `
+<div class="compare-box">
+
+<h2 style="text-align:center;margin-bottom:15px;">
+🏆 Beste Spartools (2026)
+</h2>
+
+<div class="compare-item">
+<div>
+<strong>🥇 CHECK24</strong><br>
+<small>Testsieger • bis zu 500€ sparen</small>
+</div>
+<a href="https://www.check24.de" target="_blank" class="button-green">
+Jetzt prüfen
+</a>
+</div>
+
+<div class="compare-item">
+<div>
+<strong>🥈 Verivox</strong><br>
+<small>Strom & Versicherungen vergleichen</small>
+</div>
+<a href="https://www.verivox.de" target="_blank" class="button">
+Vergleichen
+</a>
+</div>
+
+</div>
+`;
+}
+
+function seoText(v, n){
+ return `
+<div class="seo">
+
+<h2>Wie viel netto bleibt bei ${v}€ brutto?</h2>
+
+<p>
+Bei einem Bruttogehalt von ${v}€ bleiben dir ungefähr ${n}€ netto übrig.
+Der genaue Betrag hängt von Steuerklasse, Krankenversicherung und Bundesland ab.
+</p>
+
+<p>
+Viele Arbeitnehmer fragen sich, wie sie ihr Netto optimieren können.
+Ein Vergleich von Strom, Versicherungen und laufenden Kosten kann mehrere hundert Euro pro Jahr sparen.
+</p>
+
+<p>
+Gerade bei mittleren Einkommen lohnt sich ein regelmäßiger Kostenvergleich besonders,
+da hier oft unnötig hohe Ausgaben bestehen.
+</p>
+
+</div>
+`;
+}
+
 // NETTO PAGE
 function nettoPage(v){
 
@@ -109,86 +186,35 @@ function nettoPage(v){
 
 <div class="result">≈ ${n}€ netto</div>
 
-<!-- 🔥 CTA OBEN -->
 <div style="text-align:center;margin-top:20px;">
 <a href="strom-vergleich.html" class="button-green">
 Bis zu 500€ sparen → jetzt prüfen
 </a>
 </div>
+
+${compareBlock()}
 
 <p class="text">
 Bei ${v}€ brutto bleiben dir ungefähr ${n}€ netto.
 </p>
 
-<!-- 🔥 CTA MITTE -->
 <div class="cta">
-
 <h2>Du könntest gerade Geld verlieren</h2>
-
-<p>
-Viele Nutzer mit ähnlichem Gehalt sparen <strong>200€ – 500€ pro Jahr</strong>.
-</p>
-
-<a href="https://www.check24.de" target="_blank" class="button">
-Jetzt kostenlos vergleichen
-</a>
-
-</div>
-
-<p style="text-align:center;">
-<a href="index.html">Zurück</a>
-</p>
-`;
-
- return layout(`${v}€ brutto netto`, content);
-}
-
-// STUNDENLOHN PAGE
-function stundenPage(v){
-
- let s = (v / 173).toFixed(2);
-
- let links = [v-500,v-400,v-300,v-200,v-100,v+100,v+200,v+300,v+400,v+500]
-  .filter(x => x>=1000 && x<=10000)
-  .map(x => `<li><a href="stundenlohn-${x}.html">${x}€ Stundenlohn</a></li>`)
-  .join("");
-
- let content = `
-<h1>${v}€ Gehalt → Stundenlohn</h1>
-
-<div class="result">≈ ${s}€ pro Stunde</div>
-
-<!-- 🔥 CTA OBEN -->
-<div style="text-align:center;margin-top:20px;">
-<a href="strom-vergleich.html" class="button-green">
-Bis zu 500€ sparen → jetzt prüfen
-</a>
-</div>
-
-<p class="text">
-Bei ${v}€ entspricht das ungefähr ${s}€ pro Stunde (40h/Woche).
-</p>
-
-<div class="cta">
-<h2>Mehr Netto behalten</h2>
-<p>Vergleiche Strom, Versicherungen oder Konto.</p>
+<p>Viele Nutzer sparen jährlich mehrere hundert Euro.</p>
 
 <a href="https://www.check24.de" target="_blank" class="button">
 Jetzt kostenlos vergleichen
 </a>
 </div>
 
-<div class="section">
-<h2>Ähnliche Stundenlöhne</h2>
-<ul>${links}</ul>
-</div>
+${seoText(v,n)}
 
 <p style="text-align:center;">
 <a href="index.html">Zurück</a>
 </p>
 `;
 
- return layout(`${v}€ Stundenlohn`, content);
+ return layout(`${v}€ brutto netto Rechner 2026`, content);
 }
 
 // GENERATOR
@@ -198,7 +224,6 @@ function generate(){
 
  for(let v=1000; v<=10000; v+=100){
   zip.file(`netto-${v}-brutto.html`, nettoPage(v));
-  zip.file(`stundenlohn-${v}.html`, stundenPage(v));
  }
 
  zip.generateAsync({type:"blob"}).then(function(content){
