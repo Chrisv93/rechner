@@ -3,167 +3,325 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Brutto Netto Rechner Deutschland</title>
-<meta name="description" content="Berechne dein Netto Gehalt in Deutschland und optimiere deine monatlichen Kosten.">
+<meta name="description" content="Berechne dein Netto Gehalt in Deutschland und finde Möglichkeiten, monatliche Kosten zu optimieren.">
 
 <style>
+* {
+  box-sizing: border-box;
+}
+
 body {
- font-family: Arial, sans-serif;
- background:#f4f6f9;
- margin:0;
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f4f6f9;
+  color: #1f2937;
 }
 
-.container {
- max-width:900px;
- margin:40px auto;
- background:#fff;
- padding:30px;
- border-radius:12px;
- box-shadow:0 5px 20px rgba(0,0,0,0.05);
+.wrapper {
+  max-width: 960px;
+  margin: 40px auto;
+  padding: 0 20px;
 }
 
-h1 {
- text-align:center;
- margin-bottom:10px;
+.card {
+  background: #ffffff;
+  border-radius: 14px;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.06);
+  padding: 32px 28px;
 }
 
-.subtitle {
- text-align:center;
- color:#555;
- margin-bottom:30px;
+.hero {
+  text-align: center;
+  margin-bottom: 32px;
 }
 
-.cta {
- background:#eef4ff;
- padding:25px;
- border-radius:10px;
- text-align:center;
- margin-bottom:30px;
+.hero h1 {
+  margin: 0 0 12px 0;
+  font-size: 34px;
+  line-height: 1.2;
+}
+
+.hero p {
+  margin: 0 auto;
+  max-width: 720px;
+  color: #4b5563;
+  font-size: 17px;
+  line-height: 1.6;
+}
+
+.cta-box {
+  background: #eef4ff;
+  border: 1px solid #d8e5ff;
+  border-radius: 12px;
+  padding: 24px;
+  text-align: center;
+  margin-bottom: 34px;
+}
+
+.cta-box h2 {
+  margin: 0 0 10px 0;
+  font-size: 26px;
+}
+
+.cta-box p {
+  margin: 0;
+  color: #4b5563;
+  line-height: 1.6;
 }
 
 .button {
- display:inline-block;
- padding:14px 24px;
- background:#2c7be5;
- color:#fff;
- text-decoration:none;
- border-radius:8px;
- font-weight:bold;
- margin-top:10px;
+  display: inline-block;
+  margin-top: 16px;
+  padding: 14px 22px;
+  background: #2c7be5;
+  color: #ffffff;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: bold;
 }
 
 .section {
- margin-top:30px;
+  margin-top: 34px;
 }
 
 .section h2 {
- text-align:center;
- margin-bottom:15px;
+  margin: 0 0 16px 0;
+  text-align: center;
+  font-size: 24px;
 }
 
-.grid {
- display:flex;
- justify-content:space-between;
- gap:20px;
- flex-wrap:wrap;
+.section-intro {
+  text-align: center;
+  color: #4b5563;
+  margin: 0 auto 18px auto;
+  max-width: 700px;
+  line-height: 1.6;
 }
 
-.grid ul {
- flex:1;
+.link-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
 }
 
-ul {
- line-height:1.8;
+.link-box {
+  background: #fafbfc;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 18px 20px;
 }
 
-.footer {
- text-align:center;
- margin-top:40px;
- font-size:12px;
- color:#777;
+.link-box h3 {
+  margin: 0 0 12px 0;
+  font-size: 18px;
+}
+
+.link-box ul {
+  margin: 0;
+  padding-left: 18px;
+  line-height: 1.9;
+}
+
+.link-box a {
+  color: #1d4ed8;
+  text-decoration: none;
+}
+
+.link-box a:hover {
+  text-decoration: underline;
+}
+
+.info-box {
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 22px;
+  margin-top: 34px;
+}
+
+.info-box h2 {
+  margin-top: 0;
+  text-align: center;
+}
+
+.info-box p {
+  margin: 10px 0 0 0;
+  line-height: 1.7;
+  color: #4b5563;
+}
+
+.footer-links {
+  margin-top: 34px;
+  text-align: center;
+  font-size: 14px;
+  color: #6b7280;
+  line-height: 1.8;
+}
+
+.footer-links a {
+  color: #4b5563;
+  text-decoration: none;
+  margin: 0 10px;
+}
+
+.footer-links a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+  .wrapper {
+    margin: 20px auto;
+    padding: 0 12px;
+  }
+
+  .card {
+    padding: 22px 16px;
+  }
+
+  .hero h1 {
+    font-size: 28px;
+  }
+
+  .cta-box h2,
+  .section h2,
+  .info-box h2 {
+    font-size: 22px;
+  }
+
+  .link-grid {
+    grid-template-columns: 1fr;
+  }
 }
 </style>
-
 </head>
-
 <body>
 
-<div class="container">
+<div class="wrapper">
+  <div class="card">
 
-<h1>Brutto Netto Rechner Deutschland</h1>
-<p class="subtitle">Berechne dein Netto Gehalt schnell und verständlich.</p>
+    <div class="hero">
+      <h1>Brutto Netto Rechner Deutschland</h1>
+      <p>
+        Berechne dein Netto Gehalt schnell und verständlich. Zusätzlich findest du
+        passende Einstiege zu Stundenlohn, Gehaltsfragen und Möglichkeiten, laufende
+        Fixkosten sinnvoll zu vergleichen.
+      </p>
+    </div>
 
-<div class="cta">
-<h2>Mehr Netto behalten</h2>
-<p>Vergleiche kostenlos Strom, Konto und Versicherungen und spare jeden Monat Geld.</p>
-<a href="https://www.check24.de" target="_blank" class="button">Jetzt kostenlos vergleichen</a>
-</div>
+    <div class="cta-box">
+      <h2>Mehr Netto behalten</h2>
+      <p>
+        Viele zahlen unnötig zu viel für Strom, Konto, Internet oder Versicherungen.
+        Ein Vergleich kann helfen, monatliche Kosten besser einzuordnen.
+      </p>
+      <a href="https://www.check24.de" target="_blank" rel="noopener noreferrer" class="button">
+        Jetzt kostenlos vergleichen
+      </a>
+    </div>
 
-<div class="section">
-<h2>Beliebte Rechner</h2>
-<div class="grid">
+    <div class="section">
+      <h2>Beliebte Brutto-Netto Rechner</h2>
+      <p class="section-intro">
+        Häufig gesuchte Gehälter auf einen Blick.
+      </p>
 
-<ul>
-<li><a href="netto-2000-brutto.html">2000€ brutto → netto</a></li>
-<li><a href="netto-2500-brutto.html">2500€ brutto → netto</a></li>
-<li><a href="netto-3000-brutto.html">3000€ brutto → netto</a></li>
-<li><a href="netto-3500-brutto.html">3500€ brutto → netto</a></li>
-<li><a href="netto-4000-brutto.html">4000€ brutto → netto</a></li>
-</ul>
+      <div class="link-grid">
+        <div class="link-box">
+          <h3>Beliebte Werte</h3>
+          <ul>
+            <li><a href="netto-2000-brutto.html">2000€ brutto → netto</a></li>
+            <li><a href="netto-2500-brutto.html">2500€ brutto → netto</a></li>
+            <li><a href="netto-3000-brutto.html">3000€ brutto → netto</a></li>
+            <li><a href="netto-3500-brutto.html">3500€ brutto → netto</a></li>
+            <li><a href="netto-4000-brutto.html">4000€ brutto → netto</a></li>
+          </ul>
+        </div>
 
-<ul>
-<li><a href="netto-5000-brutto.html">5000€ brutto → netto</a></li>
-<li><a href="netto-6000-brutto.html">6000€ brutto → netto</a></li>
-<li><a href="netto-7000-brutto.html">7000€ brutto → netto</a></li>
-<li><a href="netto-8000-brutto.html">8000€ brutto → netto</a></li>
-<li><a href="netto-9000-brutto.html">9000€ brutto → netto</a></li>
-</ul>
+        <div class="link-box">
+          <h3>Höhere Gehälter</h3>
+          <ul>
+            <li><a href="netto-5000-brutto.html">5000€ brutto → netto</a></li>
+            <li><a href="netto-6000-brutto.html">6000€ brutto → netto</a></li>
+            <li><a href="netto-7000-brutto.html">7000€ brutto → netto</a></li>
+            <li><a href="netto-8000-brutto.html">8000€ brutto → netto</a></li>
+            <li><a href="netto-9000-brutto.html">9000€ brutto → netto</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
 
-</div>
-</div>
+    <div class="section">
+      <h2>Stundenlohn Rechner</h2>
+      <p class="section-intro">
+        Weitere Einstiege für Nutzer, die vom Monatsgehalt auf den Stundenlohn schauen möchten.
+      </p>
 
-<div class="section">
-<h2>Stundenlohn Rechner</h2>
-<div class="grid">
+      <div class="link-grid">
+        <div class="link-box">
+          <h3>Stundenlohn Beispiele</h3>
+          <ul>
+            <li><a href="stundenlohn-2000.html">2000€ Stundenlohn</a></li>
+            <li><a href="stundenlohn-2500.html">2500€ Stundenlohn</a></li>
+            <li><a href="stundenlohn-3000.html">3000€ Stundenlohn</a></li>
+          </ul>
+        </div>
 
-<ul>
-<li><a href="stundenlohn-2000.html">2000€ Stundenlohn</a></li>
-<li><a href="stundenlohn-2500.html">2500€ Stundenlohn</a></li>
-<li><a href="stundenlohn-3000.html">3000€ Stundenlohn</a></li>
-</ul>
+        <div class="link-box">
+          <h3>Weitere Werte</h3>
+          <ul>
+            <li><a href="stundenlohn-3500.html">3500€ Stundenlohn</a></li>
+            <li><a href="stundenlohn-4000.html">4000€ Stundenlohn</a></li>
+            <li><a href="stundenlohn-rechner.html">Zum Stundenlohn-Rechner</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
 
-<ul>
-<li><a href="stundenlohn-3500.html">3500€ Stundenlohn</a></li>
-<li><a href="stundenlohn-4000.html">4000€ Stundenlohn</a></li>
-</ul>
+    <div class="section">
+      <h2>Häufige Fragen</h2>
+      <p class="section-intro">
+        Diese Themen werden besonders oft gesucht und helfen Google zusätzlich, den Fokus der Website klar zu verstehen.
+      </p>
 
-</div>
-</div>
+      <div class="link-grid">
+        <div class="link-box">
+          <h3>Fragen zum Netto</h3>
+          <ul>
+            <li><a href="frage-0.html">Wie viel netto bei 2000 brutto?</a></li>
+            <li><a href="frage-1.html">Wie viel netto bei 2500 brutto?</a></li>
+            <li><a href="frage-2.html">Wie viel netto bei 3000 brutto?</a></li>
+          </ul>
+        </div>
 
-<div class="section">
-<h2>Fragen & Antworten</h2>
-<div class="grid">
+        <div class="link-box">
+          <h3>Weitere Einstiege</h3>
+          <ul>
+            <li><a href="frage-3.html">Wie viel netto bei 3500 brutto?</a></li>
+            <li><a href="frage-4.html">Wie viel netto bei 4000 brutto?</a></li>
+            <li><a href="frage-5.html">Wie viel netto bei 4500 brutto?</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
 
-<ul>
-<li><a href="netto-2000-brutto.html">Wie viel netto bei 2000 brutto?</a></li>
-<li><a href="netto-2500-brutto.html">Wie viel netto bei 2500 brutto?</a></li>
-<li><a href="netto-3000-brutto.html">Wie viel netto bei 3000 brutto?</a></li>
-</ul>
+    <div class="info-box">
+      <h2>Wichtiger Hinweis</h2>
+      <p>
+        Die dargestellten Netto-Werte dienen der Orientierung. Der tatsächliche Betrag hängt unter anderem von Steuerklasse,
+        Bundesland, Krankenversicherung und weiteren individuellen Faktoren ab.
+      </p>
+    </div>
 
-<ul>
-<li><a href="netto-3500-brutto.html">Wie viel netto bei 3500 brutto?</a></li>
-<li><a href="netto-4000-brutto.html">Wie viel netto bei 4000 brutto?</a></li>
-<li><a href="netto-4500-brutto.html">Wie viel netto bei 4500 brutto?</a></li>
-</ul>
+    <div class="footer-links">
+      <a href="about.html">Über uns</a>
+      <a href="ratgeber-netto.html">Ratgeber</a>
+      <a href="geld-sparen.html">Geld sparen</a>
+      <a href="impressum.html">Impressum</a>
+      <a href="datenschutz.html">Datenschutz</a>
+    </div>
 
-</div>
-</div>
-
-<div class="footer">
-<p>Unabhängiger Rechner ohne Gewähr. Angaben ohne Garantie.</p>
-</div>
-
+  </div>
 </div>
 
 </body>
