@@ -1,7 +1,12 @@
 
 function stundenPage(v){
 
- let s = Math.round((v / 173) * 100) / 100;
+ let s = (v / 173).toFixed(2);
+
+ let links = [v-500,v-400,v-300,v-200,v-100,v+100,v+200,v+300,v+400,v+500]
+  .filter(x => x>=1000 && x<=10000)
+  .map(x => `<li><a href="stundenlohn-${x}.html">${x}€ Stundenlohn</a></li>`)
+  .join("");
 
  return `<!DOCTYPE html>
 <html lang="de">
@@ -10,72 +15,27 @@ function stundenPage(v){
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>${v}€ Gehalt → Stundenlohn Rechner</title>
-<meta name="description" content="Berechne deinen Stundenlohn bei ${v}€ Gehalt.">
 
 <style>
-body {
- font-family: Arial, sans-serif;
- background:#f4f6f9;
- margin:0;
-}
-
+body {font-family: Arial; background:#f4f6f9; margin:0;}
 .container {
- max-width:900px;
- margin:40px auto;
- background:white;
- padding:30px;
- border-radius:14px;
- box-shadow:0 6px 24px rgba(0,0,0,0.06);
+ max-width:900px; margin:40px auto; background:white; padding:30px;
+ border-radius:14px; box-shadow:0 6px 24px rgba(0,0,0,0.06);
 }
-
-h1 {
- text-align:center;
- margin-bottom:10px;
+h1{text-align:center;}
+.result{text-align:center;font-size:26px;font-weight:bold;margin:20px 0;}
+.text{text-align:center;color:#4b5563;}
+.cta{
+ background:#eef4ff;padding:25px;border-radius:12px;text-align:center;
+ margin:30px 0;border:1px solid #d8e5ff;
 }
-
-.result {
- text-align:center;
- font-size:26px;
- font-weight:bold;
- margin:20px 0;
+.button{
+ display:inline-block;padding:14px 22px;background:#2c7be5;color:#fff;
+ text-decoration:none;border-radius:8px;font-weight:bold;margin-top:10px;
 }
-
-.text {
- text-align:center;
- color:#4b5563;
-}
-
-.cta {
- background:#eef4ff;
- padding:25px;
- border-radius:12px;
- text-align:center;
- margin:30px 0;
- border:1px solid #d8e5ff;
-}
-
-.button {
- display:inline-block;
- padding:14px 22px;
- background:#2c7be5;
- color:#fff;
- text-decoration:none;
- border-radius:8px;
- font-weight:bold;
- margin-top:10px;
-}
-
-.section {
- margin-top:30px;
-}
-
-.section h2 {
- text-align:center;
-}
-
-ul {
- line-height:1.9;
-}
+.section{margin-top:30px;}
+.section h2{text-align:center;}
+ul{line-height:1.9;}
 </style>
 
 </head>
@@ -89,7 +49,7 @@ ul {
 <div class="result">≈ ${s}€ pro Stunde</div>
 
 <p class="text">
-Bei ${v}€ Monatsgehalt entspricht das ungefähr ${s}€ pro Stunde (40h/Woche).
+Bei einem monatlichen Gehalt von ${v}€ entspricht das ungefähr ${s}€ pro Stunde (40h/Woche).
 </p>
 
 <div class="cta">
@@ -105,9 +65,7 @@ Jetzt kostenlos vergleichen
 <h2>Ähnliche Stundenlöhne</h2>
 
 <ul>
-${[v-500,v-400,v-300,v-200,v-100,v+100,v+200,v+300,v+400,v+500]
-.filter(x => x>=1000 && x<=10000)
-.map(x=>`<li><a href="stundenlohn-${x}.html">${x}€ Stundenlohn</a></li>`).join("")}
+${links}
 </ul>
 </div>
 
