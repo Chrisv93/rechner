@@ -1,4 +1,42 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<title>Seiten Generator</title>
+
+<style>
+body {
+ font-family: Arial;
+ background:#f4f6f9;
+ margin:0;
+ padding:40px;
+ text-align:center;
+}
+button {
+ padding:15px 25px;
+ font-size:18px;
+ border:none;
+ border-radius:8px;
+ background:#2c7be5;
+ color:white;
+ cursor:pointer;
+}
+</style>
+
+</head>
+
+<body>
+
+<h1>Seiten Generator</h1>
+<button onclick="generate()">Seiten erstellen</button>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+
+<script>
+
+// Stundenlohn Seite
 function stundenPage(v){
 
  let s = (v / 173).toFixed(2);
@@ -14,7 +52,7 @@ function stundenPage(v){
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>${v}€ Gehalt → Stundenlohn Rechner</title>
+<title>${v}€ Gehalt → Stundenlohn</title>
 
 <style>
 body {font-family: Arial; background:#f4f6f9; margin:0;}
@@ -49,12 +87,12 @@ ul{line-height:1.9;}
 <div class="result">≈ ${s}€ pro Stunde</div>
 
 <p class="text">
-Bei einem monatlichen Gehalt von ${v}€ entspricht das ungefähr ${s}€ pro Stunde (40h/Woche).
+Bei ${v}€ entspricht das ungefähr ${s}€ pro Stunde (40h/Woche).
 </p>
 
 <div class="cta">
 <h2>Mehr Netto behalten</h2>
-<p>Vergleiche Strom, Versicherungen oder Konto und spare monatlich Geld.</p>
+<p>Vergleiche Strom, Versicherungen oder Konto.</p>
 
 <a href="https://www.check24.de" target="_blank" class="button">
 Jetzt kostenlos vergleichen
@@ -70,7 +108,7 @@ ${links}
 </div>
 
 <p style="text-align:center;margin-top:25px;">
-<a href="index.html">Zurück zur Übersicht</a>
+<a href="index.html">Zurück</a>
 </p>
 
 </div>
@@ -78,3 +116,24 @@ ${links}
 </body>
 </html>`;
 }
+
+// GENERATOR
+function generate(){
+ let zip = new JSZip();
+
+ for(let v=1000; v<=10000; v+=100){
+  zip.file(`stundenlohn-${v}.html`, stundenPage(v));
+ }
+
+ zip.generateAsync({type:"blob"}).then(function(content){
+  let a=document.createElement("a");
+  a.href=URL.createObjectURL(content);
+  a.download="stundenlohn.zip";
+  a.click();
+ });
+}
+
+</script>
+
+</body>
+</html>
