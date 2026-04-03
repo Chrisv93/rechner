@@ -1,114 +1,6 @@
 
-<!DOCTYPE html>
-<html lang="de">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Seiten Generator</title>
-
-<style>
-body {
- font-family: Arial, sans-serif;
- background:#f4f6f9;
- margin:0;
- padding:40px;
- text-align:center;
-}
-
-button {
- padding:15px 25px;
- font-size:18px;
- border:none;
- border-radius:8px;
- background:#2c7be5;
- color:white;
- cursor:pointer;
-}
-</style>
-
-</head>
-
-<body>
-
-<h1>Seiten Generator</h1>
-<button onclick="generate()">Seiten erstellen</button>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-
-<script>
-
-// Netto Berechnung
-function netto(b){
- if(b<=2000)return Math.round(b*0.74/50)*50;
- if(b<=3000)return Math.round(b*0.72/50)*50;
- if(b<=4000)return Math.round(b*0.70/50)*50;
- if(b<=5000)return Math.round(b*0.68/50)*50;
- if(b<=7000)return Math.round(b*0.66/50)*50;
- return Math.round(b*0.64/50)*50;
-}
-
-// Brutto Seiten
-function nettoPage(v){
- let n = netto(v);
-
- return `<!DOCTYPE html>
-<html lang="de">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>${v}€ brutto in netto – Rechner</title>
-
-<style>
-body {font-family:Arial;background:#f4f6f9;margin:0;}
-.container {
- max-width:800px;margin:40px auto;background:white;padding:30px;
- border-radius:12px;box-shadow:0 5px 20px rgba(0,0,0,0.05);
-}
-h1{text-align:center;}
-.result{text-align:center;font-size:26px;font-weight:bold;margin:20px 0;}
-.cta{background:#eef4ff;padding:25px;border-radius:10px;text-align:center;margin:30px 0;}
-.button{
- display:inline-block;padding:14px 22px;background:#2c7be5;color:#fff;
- text-decoration:none;border-radius:8px;font-weight:bold;margin-top:10px;
-}
-</style>
-
-</head>
-<body>
-
-<div class="container">
-
-<h1>${v}€ brutto in netto</h1>
-
-<div class="result">≈ ${n}€ netto</div>
-
-<p style="text-align:center;">
-Bei ${v}€ brutto bleiben dir ungefähr ${n}€ netto.
-</p>
-
-<div class="cta">
-<h2>Mehr Netto behalten</h2>
-<p>Vergleiche Strom, Versicherungen oder Konto.</p>
-
-<a href="DEIN_AWIN_LINK_HIER" target="_blank" class="button">
-Jetzt kostenlos vergleichen
-</a>
-</div>
-
-<p style="text-align:center;">
-<a href="index.html">Zurück</a>
-</p>
-
-</div>
-
-</body>
-</html>`;
-}
-
-// Stundenlohn Seiten
 function stundenPage(v){
+
  let s = Math.round((v / 173) * 100) / 100;
 
  return `<!DOCTYPE html>
@@ -117,47 +9,110 @@ function stundenPage(v){
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>${v}€ Gehalt → Stundenlohn</title>
+<title>${v}€ Gehalt → Stundenlohn Rechner</title>
+<meta name="description" content="Berechne deinen Stundenlohn bei ${v}€ Gehalt.">
 
 <style>
-body {font-family:Arial;background:#f4f6f9;margin:0;}
-.container {
- max-width:800px;margin:40px auto;background:white;padding:30px;
- border-radius:12px;box-shadow:0 5px 20px rgba(0,0,0,0.05);
+body {
+ font-family: Arial, sans-serif;
+ background:#f4f6f9;
+ margin:0;
 }
-h1{text-align:center;}
-.result{text-align:center;font-size:26px;font-weight:bold;margin:20px 0;}
-.cta{background:#eef4ff;padding:25px;border-radius:10px;text-align:center;margin:30px 0;}
-.button{
- display:inline-block;padding:14px 22px;background:#2c7be5;color:#fff;
- text-decoration:none;border-radius:8px;font-weight:bold;margin-top:10px;
+
+.container {
+ max-width:900px;
+ margin:40px auto;
+ background:white;
+ padding:30px;
+ border-radius:14px;
+ box-shadow:0 6px 24px rgba(0,0,0,0.06);
+}
+
+h1 {
+ text-align:center;
+ margin-bottom:10px;
+}
+
+.result {
+ text-align:center;
+ font-size:26px;
+ font-weight:bold;
+ margin:20px 0;
+}
+
+.text {
+ text-align:center;
+ color:#4b5563;
+}
+
+.cta {
+ background:#eef4ff;
+ padding:25px;
+ border-radius:12px;
+ text-align:center;
+ margin:30px 0;
+ border:1px solid #d8e5ff;
+}
+
+.button {
+ display:inline-block;
+ padding:14px 22px;
+ background:#2c7be5;
+ color:#fff;
+ text-decoration:none;
+ border-radius:8px;
+ font-weight:bold;
+ margin-top:10px;
+}
+
+.section {
+ margin-top:30px;
+}
+
+.section h2 {
+ text-align:center;
+}
+
+ul {
+ line-height:1.9;
 }
 </style>
 
 </head>
+
 <body>
 
 <div class="container">
 
 <h1>${v}€ Gehalt → Stundenlohn</h1>
 
-<div class="result">≈ ${s}€ / Stunde</div>
+<div class="result">≈ ${s}€ pro Stunde</div>
 
-<p style="text-align:center;">
-Bei ${v}€ entspricht das ca. ${s}€ pro Stunde.
+<p class="text">
+Bei ${v}€ Monatsgehalt entspricht das ungefähr ${s}€ pro Stunde (40h/Woche).
 </p>
 
 <div class="cta">
 <h2>Mehr Netto behalten</h2>
-<p>Vergleiche Strom, Versicherungen oder Konto.</p>
+<p>Vergleiche Strom, Versicherungen oder Konto und spare monatlich Geld.</p>
 
-<a href="DEIN_AWIN_LINK_HIER" target="_blank" class="button">
+<a href="https://www.check24.de" target="_blank" class="button">
 Jetzt kostenlos vergleichen
 </a>
 </div>
 
-<p style="text-align:center;">
-<a href="index.html">Zurück</a>
+<div class="section">
+<h2>Ähnliche Stundenlöhne</h2>
+
+<ul>
+${[v-500,v-400,v-300,v-200,v-100,v+100,v+200,v+300,v+400,v+500]
+.filter(x => x>=1000 && x<=10000)
+.map(x=>`<li><a href="stundenlohn-${x}.html">${x}€ Stundenlohn</a></li>`).join("")}
+</ul>
+</div>
+
+<p style="text-align:center;margin-top:25px;">
+<a href="index.html">Zurück zur Übersicht</a>
 </p>
 
 </div>
@@ -165,25 +120,3 @@ Jetzt kostenlos vergleichen
 </body>
 </html>`;
 }
-
-// GENERATOR
-function generate(){
- let zip = new JSZip();
-
- for(let v=1000; v<=10000; v+=100){
-  zip.file(`netto-${v}-brutto.html`, nettoPage(v));
-  zip.file(`stundenlohn-${v}.html`, stundenPage(v));
- }
-
- zip.generateAsync({type:"blob"}).then(function(content){
-  let a=document.createElement("a");
-  a.href=URL.createObjectURL(content);
-  a.download="seiten.zip";
-  a.click();
- });
-}
-
-</script>
-
-</body>
-</html>
