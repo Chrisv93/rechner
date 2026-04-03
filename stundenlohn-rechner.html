@@ -2,30 +2,131 @@
 <html lang="de">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Stundenlohn Rechner</title>
+<meta name="description" content="Berechne deinen Stundenlohn basierend auf deinem Gehalt.">
+
+<style>
+body {
+ font-family: Arial, sans-serif;
+ background:#f4f6f9;
+ margin:0;
+}
+
+.container {
+ max-width:900px;
+ margin:40px auto;
+ background:white;
+ padding:30px;
+ border-radius:14px;
+ box-shadow:0 6px 24px rgba(0,0,0,0.06);
+}
+
+h1 {
+ text-align:center;
+ margin-bottom:10px;
+}
+
+.text {
+ text-align:center;
+ color:#4b5563;
+ margin-bottom:20px;
+}
+
+.input-box {
+ text-align:center;
+ margin-top:20px;
+}
+
+input {
+ padding:12px;
+ font-size:16px;
+ width:200px;
+ border-radius:8px;
+ border:1px solid #ccc;
+ margin-right:10px;
+}
+
+button {
+ padding:12px 20px;
+ font-size:16px;
+ border:none;
+ border-radius:8px;
+ background:#2c7be5;
+ color:white;
+ cursor:pointer;
+}
+
+.result {
+ text-align:center;
+ font-size:26px;
+ font-weight:bold;
+ margin:25px 0;
+}
+
+.cta {
+ background:#eef4ff;
+ padding:25px;
+ border-radius:12px;
+ text-align:center;
+ margin:30px 0;
+ border:1px solid #d8e5ff;
+}
+
+.button {
+ display:inline-block;
+ padding:14px 22px;
+ background:#2c7be5;
+ color:#fff;
+ text-decoration:none;
+ border-radius:8px;
+ font-weight:bold;
+ margin-top:10px;
+}
+</style>
+
 </head>
+
 <body>
+
+<div class="container">
 
 <h1>Stundenlohn Rechner</h1>
 
-<input type="number" id="gehalt" placeholder="Monatsgehalt (€)">
-<button onclick="calc()">Berechnen</button>
+<p class="text">
+Berechne schnell deinen Stundenlohn basierend auf deinem Monatsgehalt.
+</p>
 
-<h2 id="result"></h2>
+<div class="input-box">
+<input type="number" id="gehalt" placeholder="Monatsgehalt €">
+<button onclick="calc()">Berechnen</button>
+</div>
+
+<div class="result" id="output"></div>
+
+<div class="cta">
+<h2>Mehr Netto behalten</h2>
+<p>Vergleiche Strom, Versicherungen oder Konto und spare monatlich Geld.</p>
+
+<a href="https://www.check24.de" target="_blank" class="button">
+Jetzt kostenlos vergleichen
+</a>
+</div>
+
+<p style="text-align:center;margin-top:20px;">
+<a href="index.html">Zurück zur Übersicht</a>
+</p>
+
+</div>
 
 <script>
-function calc() {
-    let gehalt = document.getElementById("gehalt").value;
+function calc(){
+ let v = document.getElementById("gehalt").value;
+ if(!v) return;
 
-    if(gehalt <= 0) {
-        document.getElementById("result").innerText = "Bitte Wert eingeben";
-        return;
-    }
-
-    let stundenlohn = gehalt / 160;
-
-    document.getElementById("result").innerText =
-        "Stundenlohn: " + stundenlohn.toFixed(2) + " €";
+ let s = (v / 173).toFixed(2);
+ document.getElementById("output").innerText = "≈ " + s + "€ pro Stunde";
 }
 </script>
 
