@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="de">
 <head>
@@ -73,6 +74,10 @@ h1{text-align:center;}
  display:inline-block;padding:14px 22px;background:#2c7be5;
  color:#fff;text-decoration:none;border-radius:8px;font-weight:bold;margin-top:10px;
 }
+.button-green{
+ display:inline-block;padding:14px 22px;background:#16a34a;
+ color:#fff;text-decoration:none;border-radius:8px;font-weight:bold;margin-top:10px;
+}
 .section{margin-top:30px;}
 .section h2{text-align:center;}
 ul{line-height:1.9;}
@@ -98,34 +103,36 @@ ${content}
 function nettoPage(v){
 
  let n = netto(v);
- let sparen = Math.round(v * 0.05);
 
  let content = `
 <h1>${v}€ brutto in netto</h1>
 
 <div class="result">≈ ${n}€ netto</div>
 
+<!-- 🔥 CTA OBEN -->
+<div style="text-align:center;margin-top:20px;">
+<a href="strom-vergleich.html" class="button-green">
+Bis zu 500€ sparen → jetzt prüfen
+</a>
+</div>
+
 <p class="text">
 Bei ${v}€ brutto bleiben dir ungefähr ${n}€ netto.
 </p>
 
+<!-- 🔥 CTA MITTE -->
 <div class="cta">
 
 <h2>Du könntest gerade Geld verlieren</h2>
 
 <p>
-Viele Nutzer mit ähnlichem Gehalt sparen <strong>200€ – 500€ pro Jahr</strong> bei Strom und Verträgen.
+Viele Nutzer mit ähnlichem Gehalt sparen <strong>200€ – 500€ pro Jahr</strong>.
 </p>
 
-<a href="strom-vergleich.html" class="button">
-Jetzt Einsparpotenzial prüfen
-</a>
-
-</div>
-
 <a href="https://www.check24.de" target="_blank" class="button">
-Jetzt Sparpotenzial prüfen
+Jetzt kostenlos vergleichen
 </a>
+
 </div>
 
 <p style="text-align:center;">
@@ -150,22 +157,14 @@ function stundenPage(v){
 <h1>${v}€ Gehalt → Stundenlohn</h1>
 
 <div class="result">≈ ${s}€ pro Stunde</div>
-<div style="text-align:center;margin-top:20px;">
 
-<a href="strom-vergleich.html" style="
-display:inline-block;
-padding:14px 22px;
-background:#16a34a;
-color:#fff;
-text-decoration:none;
-border-radius:8px;
-font-weight:bold;
-font-size:16px;
-">
+<!-- 🔥 CTA OBEN -->
+<div style="text-align:center;margin-top:20px;">
+<a href="strom-vergleich.html" class="button-green">
 Bis zu 500€ sparen → jetzt prüfen
 </a>
-
 </div>
+
 <p class="text">
 Bei ${v}€ entspricht das ungefähr ${s}€ pro Stunde (40h/Woche).
 </p>
