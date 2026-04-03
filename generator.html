@@ -2,104 +2,58 @@
 <html lang="de">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Seiten Generator</title>
-
-<style>
-body {
- font-family: Arial, sans-serif;
- background:#f4f6f9;
- margin:0;
- padding:40px;
- text-align:center;
-}
-button {
- padding:15px 25px;
- font-size:18px;
- border:none;
- border-radius:8px;
- background:#2c7be5;
- color:white;
- cursor:pointer;
-}
-</style>
-
+<title>Fragen Generator</title>
 </head>
 
 <body>
 
-<h1>Seiten Generator</h1>
-<button onclick="generate()">Seiten erstellen</button>
+<button onclick="generate()">Frage Seiten erstellen</button>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 
 <script>
 
-function netto(b){
- if(b<=2000)return Math.round(b*0.74/50)*50;
- if(b<=3000)return Math.round(b*0.72/50)*50;
- if(b<=4000)return Math.round(b*0.70/50)*50;
- if(b<=5000)return Math.round(b*0.68/50)*50;
- if(b<=7000)return Math.round(b*0.66/50)*50;
- return Math.round(b*0.64/50)*50;
-}
+let werte = [2000,2500,3000,3500,4000,4500];
 
-function layout(title, content){
+function fragePage(v){
+
  return `<!DOCTYPE html>
 <html lang="de">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>${title}</title>
-
-<meta name="description" content="${title} berechnen + Spartipps.">
+<title>Wie viel netto bei ${v} brutto?</title>
 
 <style>
-body {font-family:Arial;background:#f4f6f9;margin:0;}
-.wrapper {max-width:960px;margin:40px auto;padding:0 20px;}
-.card {
- background:#fff;border-radius:14px;padding:30px;
- box-shadow:0 6px 24px rgba(0,0,0,0.06);
+body {
+ font-family: Arial;
+ background:#f4f6f9;
+ margin:0;
 }
-h1{text-align:center;}
-.result{text-align:center;font-size:26px;font-weight:bold;margin:20px 0;}
-.text{text-align:center;color:#4b5563;}
-.cta{
- background:#eef4ff;padding:25px;border-radius:12px;
- text-align:center;margin:30px 0;border:1px solid #d8e5ff;
-}
-.button{
- display:inline-block;padding:14px 22px;background:#2c7be5;
- color:#fff;text-decoration:none;border-radius:8px;font-weight:bold;margin-top:10px;
-}
-.button-green{
- display:inline-block;padding:14px 22px;background:#16a34a;
- color:#fff;text-decoration:none;border-radius:8px;font-weight:bold;margin-top:10px;
-}
-.compare-box{
- margin-top:30px;
- background:#ffffff;
- border:1px solid #e5e7eb;
- border-radius:12px;
+
+.wrapper {
+ max-width:960px;
+ margin:40px auto;
  padding:20px;
 }
-.compare-item{
- display:flex;
- justify-content:space-between;
- align-items:center;
- padding:12px;
- border-radius:8px;
- background:#f9fafb;
- margin-bottom:10px;
+
+.card {
+ background:#fff;
+ padding:30px;
+ border-radius:14px;
+ box-shadow:0 6px 24px rgba(0,0,0,0.06);
+ text-align:center;
 }
-.section{margin-top:30px;}
-.section h2{text-align:center;}
-ul{line-height:1.9;}
-.seo{
- margin-top:40px;
- color:#374151;
- line-height:1.7;
+
+.button {
+ display:inline-block;
+ margin-top:20px;
+ padding:14px 22px;
+ background:#2c7be5;
+ color:#fff;
+ text-decoration:none;
+ border-radius:8px;
+ font-weight:bold;
 }
 </style>
 
@@ -110,7 +64,15 @@ ul{line-height:1.9;}
 <div class="wrapper">
 <div class="card">
 
-${content}
+<h1>Wie viel netto bei ${v} brutto?</h1>
+
+<p>
+Hier kannst du schnell berechnen, wie viel netto du bei deinem Bruttogehalt erhältst.
+</p>
+
+<a href="netto-${v}-brutto.html" class="button">
+Jetzt Rechner nutzen
+</a>
 
 </div>
 </div>
@@ -119,117 +81,18 @@ ${content}
 </html>`;
 }
 
-function compareBlock(){
- return `
-<div class="compare-box">
-
-<h2 style="text-align:center;margin-bottom:15px;">
-🏆 Beste Spartools (2026)
-</h2>
-
-<div class="compare-item">
-<div>
-<strong>🥇 CHECK24</strong><br>
-<small>Testsieger • bis zu 500€ sparen</small>
-</div>
-<a href="https://www.check24.de" target="_blank" class="button-green">
-Jetzt prüfen
-</a>
-</div>
-
-<div class="compare-item">
-<div>
-<strong>🥈 Verivox</strong><br>
-<small>Strom & Versicherungen vergleichen</small>
-</div>
-<a href="https://www.verivox.de" target="_blank" class="button">
-Vergleichen
-</a>
-</div>
-
-</div>
-`;
-}
-
-function seoText(v, n){
- return `
-<div class="seo">
-
-<h2>Wie viel netto bleibt bei ${v}€ brutto?</h2>
-
-<p>
-Bei einem Bruttogehalt von ${v}€ bleiben dir ungefähr ${n}€ netto übrig.
-Der genaue Betrag hängt von Steuerklasse, Krankenversicherung und Bundesland ab.
-</p>
-
-<p>
-Viele Arbeitnehmer fragen sich, wie sie ihr Netto optimieren können.
-Ein Vergleich von Strom, Versicherungen und laufenden Kosten kann mehrere hundert Euro pro Jahr sparen.
-</p>
-
-<p>
-Gerade bei mittleren Einkommen lohnt sich ein regelmäßiger Kostenvergleich besonders,
-da hier oft unnötig hohe Ausgaben bestehen.
-</p>
-
-</div>
-`;
-}
-
-// NETTO PAGE
-function nettoPage(v){
-
- let n = netto(v);
-
- let content = `
-<h1>${v}€ brutto in netto</h1>
-
-<div class="result">≈ ${n}€ netto</div>
-
-<div style="text-align:center;margin-top:20px;">
-<a href="strom-vergleich.html" class="button-green">
-Bis zu 500€ sparen → jetzt prüfen
-</a>
-</div>
-
-${compareBlock()}
-
-<p class="text">
-Bei ${v}€ brutto bleiben dir ungefähr ${n}€ netto.
-</p>
-
-<div class="cta">
-<h2>Du könntest gerade Geld verlieren</h2>
-<p>Viele Nutzer sparen jährlich mehrere hundert Euro.</p>
-
-<a href="https://www.check24.de" target="_blank" class="button">
-Jetzt kostenlos vergleichen
-</a>
-</div>
-
-${seoText(v,n)}
-
-<p style="text-align:center;">
-<a href="index.html">Zurück</a>
-</p>
-`;
-
- return layout(`${v}€ brutto netto Rechner 2026`, content);
-}
-
-// GENERATOR
 function generate(){
 
  let zip = new JSZip();
 
- for(let v=1000; v<=10000; v+=100){
-  zip.file(`netto-${v}-brutto.html`, nettoPage(v));
- }
+ werte.forEach((v, i) => {
+  zip.file(`frage-${i}.html`, fragePage(v));
+ });
 
  zip.generateAsync({type:"blob"}).then(function(content){
   let a=document.createElement("a");
   a.href=URL.createObjectURL(content);
-  a.download="seiten.zip";
+  a.download="fragen.zip";
   a.click();
  });
 
